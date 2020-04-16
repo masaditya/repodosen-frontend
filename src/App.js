@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Layout } from "antd";
+import { Sidenav } from "./components/Sidenav/Sidenav";
+import { BottomFooter } from "./components/BottomFooter/BottomFooter";
+import { Switch, Route } from "react-router-dom";
 
-function App() {
+export const App = () => {
+  const { Header, Content } = Layout;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Sidenav />
+
+      <Layout style={{ marginLeft: 200 }}>
+        <Header style={{ background: "#fff", padding: 0 }} />
+        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <div style={{ padding: 24, background: "#fff", textAlign: "center" }}>
+            <Switch>
+              <Route exact path="/" />
+            </Switch>
+          </div>
+        </Content>
+        <BottomFooter />
+      </Layout>
+    </Layout>
   );
-}
+};
 
 export default App;
