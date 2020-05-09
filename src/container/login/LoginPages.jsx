@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-// import { RootContext } from "../../context/Context";
+import React, { useState, useContext } from "react";
+import { RootContext } from "../../context/Context";
 import { Login } from "../../context/actions/actions";
+import { ToastContainer, toast } from "react-toastify";
 
 export const LoginPages = () => {
-  // const context = useContext(RootContext);
+  const { dispatch } = useContext(RootContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +12,12 @@ export const LoginPages = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     //
+    toast.success("Hello, Welcome back !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+
+    const result = await Login(username, password);
+    // const toHome = dispatch(result);
   };
 
   return (
@@ -27,8 +34,7 @@ export const LoginPages = () => {
         type="password"
         name="password"
       />
-
-      <button type="submit">submit</button>
+      <button type="submit">Login</button>
     </form>
   );
 };

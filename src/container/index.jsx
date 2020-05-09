@@ -18,6 +18,34 @@ export const MainContainer = () => {
             <Switch>
               <Route exact path="/" component={MainPages} />
               <Route path="/profile" component={ProfilePages} />
+              <Route
+                path="/kepangkatan"
+                render={(props) => <MainPages {...props} />}
+              />
+              <Route
+                path="/pendidikan"
+                render={(props) => <MainPages {...props} />}
+              />
+              <Route
+                path="/penelitian"
+                render={(props) => <MainPages {...props} />}
+              />
+              <Route
+                path="/pengabdian"
+                render={(props) => <MainPages {...props} />}
+              />
+              <Route
+                path="/pengajaran"
+                render={(props) => <MainPages {...props} />}
+              />
+              <Route
+                path="/pelatihan"
+                render={(props) => <MainPages {...props} />}
+              />
+              <Route
+                path="/sertifikasi"
+                render={(props) => <MainPages {...props} />}
+              />
             </Switch>
           </div>
         </Content>

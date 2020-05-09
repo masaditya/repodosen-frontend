@@ -1,5 +1,5 @@
 export const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: localStorage.getItem("token") !== null,
   isAdmin: true,
   user: null,
   token: localStorage.getItem("token"),

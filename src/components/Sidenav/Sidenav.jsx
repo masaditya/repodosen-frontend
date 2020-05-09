@@ -7,8 +7,6 @@ import { RootContext } from "../../context/Context";
 export const Sidenav = () => {
   const history = useHistory();
 
-  const { state } = useContext(RootContext);
-  console.log(state);
   return (
     <Sider
       style={{

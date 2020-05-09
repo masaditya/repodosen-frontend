@@ -8,12 +8,11 @@ import {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
-        // isAuthenticated: true,
-        //   user: action.payload.user,
-        //   token: action.payload.token,
+        isAuthenticated: true,
+          user: action.payload.user,
+          token: action.payload.token,
       };
     case "LOGOUT":
       localStorage.clear();
