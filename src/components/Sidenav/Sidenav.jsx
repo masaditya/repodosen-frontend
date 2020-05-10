@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import Sider from "antd/lib/layout/Sider";
 import { Menu, Icon } from "antd";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
 import { RootContext } from "../../context/Context";
 
 export const Sidenav = () => {
   const history = useHistory();
-
+  const { state } = useContext(RootContext);
   return (
     <Sider
       style={{
@@ -30,10 +31,12 @@ export const Sidenav = () => {
       </div>
 
       <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-        <Menu.Item key="0" onClick={() => history.push("/dosen")}>
-          <Icon type="usergroup-add" />
-          <span className="nav-text">Dosen</span>
-        </Menu.Item>
+        {state.isAdmin && (
+          <Menu.Item key="0" onClick={() => history.push("/dosen")}>
+            <Icon type="usergroup-add" />
+            <span className="nav-text">Dosen</span>
+          </Menu.Item>
+        )}
         <Menu.Item key="1" onClick={() => history.push("/kepangkatan")}>
           <Icon type="user" />
           <span className="nav-text">Kepangkatan</span>

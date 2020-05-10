@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { RootContext } from "../../context/Context";
 import { Login } from "../../context/actions/actions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { LOGIN_SUCCESS } from "../../context/actionTypes";
 
 export const LoginPages = () => {
   const { dispatch } = useContext(RootContext);
@@ -12,12 +13,19 @@ export const LoginPages = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     //
-    toast.success("Hello, Welcome back !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
 
     const result = await Login(username, password);
-    // const toHome = dispatch(result);
+    // console.log(result);
+    if (result.type === LOGIN_SUCCESS) {
+      toast.success("Hello, Welcome back !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      dispatch(result);
+    } else {
+      toast.error("Invalid Credentials", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   return (

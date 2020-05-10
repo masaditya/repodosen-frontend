@@ -1,5 +1,7 @@
 import {
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  LOGOUT_START,
+
 } from "../actionTypes";
 import {
   initialState
@@ -8,18 +10,20 @@ import {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
+      console.log(action)
       return {
         ...state,
         isAuthenticated: true,
-          user: action.payload.user,
+          isAdmin: action.payload.isAdmin,
           token: action.payload.token,
       };
-    case "LOGOUT":
+    case LOGOUT_START:
       localStorage.clear();
       return {
         ...state,
         isAuthenticated: false,
-          user: null,
+          token: null,
+          isAdmin: false
       };
     default:
       return state;

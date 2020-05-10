@@ -1,18 +1,57 @@
 import React from "react";
-import { Layout } from "antd";
+import { Layout, Button, Avatar, Menu, Dropdown } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import { ProfilePages } from "./content/Profile/ProfilePages";
 import { MainPages } from "./content/Main/MainPages";
+import { useContext } from "react";
+import { RootContext } from "../context/Context";
+import { Logout } from "../context/actions/actions";
+import { toast } from "react-toastify";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
+  const { dispatch } = useContext(RootContext);
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <Link to="/profile"> Profile </Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="1">
+        <p
+          onClick={() => {
+            dispatch(Logout());
+            toast.success("Logout Successful", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }}
+        >
+          Logout
+        </p>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Layout>
       <Sidenav />
       <Layout style={{ marginLeft: 200 }}>
-        <Header style={{ background: "#fff", padding: 0 }} />
+        <Header
+          style={{
+            background: "#fff",
+            padding: " 15px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button>Add Data</Button>
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <Avatar>A</Avatar>
+          </Dropdown>
+        </Header>
+
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div style={{ padding: 24, background: "#fff", textAlign: "center" }}>
             <Switch>

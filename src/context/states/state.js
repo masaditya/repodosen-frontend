@@ -1,6 +1,5 @@
 export const initialState = {
   isAuthenticated: localStorage.getItem("token") !== null,
-  isAdmin: true,
-  user: null,
+  isAdmin: false,
   token: localStorage.getItem("token"),
 };
