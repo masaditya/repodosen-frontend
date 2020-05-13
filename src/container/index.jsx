@@ -2,17 +2,21 @@ import React from "react";
 import { Layout, Button, Avatar, Menu, Dropdown } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link, useHistory } from "react-router-dom";
 import { ProfilePages } from "./content/Profile/ProfilePages";
 import { MainPages } from "./content/Main/MainPages";
 import { useContext } from "react";
 import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
 import { toast } from "react-toastify";
+import { FormDataPages } from "./content/FormData/FormDataPages";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
   const { dispatch } = useContext(RootContext);
+
+  const history = useHistory();
+
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -46,7 +50,7 @@ export const MainContainer = () => {
             justifyContent: "space-between",
           }}
         >
-          <Button>Add Data</Button>
+          <Button onClick={() => history.push("/add")}>Add Data</Button>
           <Dropdown overlay={menu} trigger={["click"]}>
             <Avatar>A</Avatar>
           </Dropdown>
@@ -85,6 +89,10 @@ export const MainContainer = () => {
                 path="/sertifikasi"
                 render={(props) => <MainPages {...props} />}
               />
+
+              {/* form */}
+
+              <Route path="/add" component={FormDataPages} />
             </Switch>
           </div>
         </Content>

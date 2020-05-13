@@ -5,6 +5,12 @@ import {
   LOGOUT_START
 } from "../actionTypes";
 
+const config = {
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("token")
+  }
+}
+
 export const Login = async (username, password) => {
   const response = await Axios.post("http://localhost:8000/login", {
       usernameLogin: username,
@@ -43,7 +49,9 @@ export const Logout = () => {
 }
 
 export const GetAllData = async (pathname) => {
-  const response = await Axios.get("https://jsonplaceholder.typicode.com/users")
+  const url = "http://localhost:8000" + pathname
+  console.log(url)
+  const response = await Axios.get(url, config)
     .then(res => {
       return res
     }).catch(err => {

@@ -30,7 +30,7 @@ export const Sidenav = () => {
         </Menu>
       </div>
 
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+      <Menu theme="dark" mode="inline">
         {state.isAdmin && (
           <Menu.Item key="0" onClick={() => history.push("/dosen")}>
             <Icon type="usergroup-add" />

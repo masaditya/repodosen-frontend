@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import { useLocation } from "react-router-dom";
-import { Card, Skeleton, Avatar, Row, Col, Divider } from "antd";
+import { Card, Skeleton, Row, Col, Divider } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import Meta from "antd/lib/card/Meta";
 import { GetAllData } from "../../../context/actions/actions";
+import { useHistory } from "react-router-dom";
 
 export const MainPages = (props) => {
-  const [repos, setRepos] = React.useState([1, 2, 3, 4, 5, 6]);
-  const [loading, setLoading] = React.useState(true);
+  const [repos, setRepos] = useState([1, 2, 3, 4, 5, 6]);
+  const [loading, setLoading] = useState(true);
+  const history = useHistory();
 
-  React.useEffect(() => {
-    console.log(props.location.pathname);
-    GetAllData(props.location.pathname).then((result) => {
-      setRepos(result.data);
+  useEffect(() => {
+    GetAllData(props.location.pathname).then((res) => {
+      setRepos(res.data);
       setLoading(false);
     });
   }, [props.location.pathname]);
@@ -29,6 +30,7 @@ export const MainPages = (props) => {
           return (
             <Col lg={8} md={12} sm={24} key={i}>
               <Card
+                onClick={(e) => history.push("/add", { repo })}
                 actions={[
                   <EditOutlined key="edit" />,
                   <DeleteOutlined key="delete" />,
@@ -36,9 +38,6 @@ export const MainPages = (props) => {
               >
                 <Skeleton loading={loading} avatar active>
                   <Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
                     title="Card title"
                     description="This is the description"
                   />
