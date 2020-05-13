@@ -14,7 +14,7 @@ export const MainPages = (props) => {
   useEffect(() => {
     GetAllData(props.location.pathname).then((res) => {
       setRepos(res.data);
-      console.log(res.data);
+      console.log(res.data.length);
       setLoading(false);
     });
   }, [props.location.pathname]);

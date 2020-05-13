@@ -20,10 +20,6 @@ export const FormUpdatePages = () => {
     console.log("Success:", values);
   };
 
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log("Failed:", errorInfo);
-  // };ForFormDataPagesFormDataPagesmDataPages
-
   const stringToUppercase = (str) => {
     const log = str.split("_").map((word) => {
       const tmp = word.charAt(0).toUpperCase() + word.slice(1);

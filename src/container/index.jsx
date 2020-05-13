@@ -11,6 +11,8 @@ import { Logout } from "../context/actions/actions";
 import { toast } from "react-toastify";
 import { FormDataPages } from "./content/FormData/FormDataPages";
 import { FormUpdatePages } from "./content/FormUpdate/FormUpdatePages";
+import { DetailPages } from "./content/Detail/Detail";
+import { DashboardPages } from "./content/Dashboard/DashboardPages";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
@@ -60,7 +62,7 @@ export const MainContainer = () => {
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div style={{ padding: 24, background: "#fff", textAlign: "center" }}>
             <Switch>
-              <Route exact path="/" component={MainPages} />
+              <Route exact path="/" component={DashboardPages} />
               <Route path="/profile" component={ProfilePages} />
               <Route
                 path="/kepangkatan"
@@ -90,6 +92,10 @@ export const MainContainer = () => {
                 path="/sertifikasi"
                 render={(props) => <MainPages {...props} />}
               />
+
+              {/* read */}
+
+              <Route path="/detail" component={DetailPages} />
 
               {/* form */}
 

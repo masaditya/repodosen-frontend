@@ -1,10 +1,13 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Form, Input, Button, Select } from "antd";
+import React, { useState } from "react";
+// import { useHistory } from "react-router-dom";
+import { Select, Form, Divider, Button, Input, Upload } from "antd";
+import { models } from "../../../types";
 
 export const FormDataPages = () => {
+  const [formControl, setFormControl] = useState(models.kepangkatan);
   const { Option } = Select;
 
+  // Layout
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -13,75 +16,57 @@ export const FormDataPages = () => {
     wrapperCol: { offset: 8, span: 16 },
   };
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const handleChange = (value) => {
+    console.log(models[value]);
+    setFormControl(models[value]);
   };
 
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log("Failed:", errorInfo);
-  // };ForFormDataPagesFormDataPagesmDataPages
-
-  const stringToUppercase = (str) => {
-    const log = str.split("_").map((word) => {
-      const tmp = word.charAt(0).toUpperCase() + word.slice(1);
-      return tmp;
-    });
-    return log.join(" ");
-  };
-  // const [form] = Form.useForm();
-
-  const onGenderChange = (value) => {
-    switch (value) {
-      case "male":
-        // form.setFieldsValue({ note: "Hi, man!" });
-        return;
-      case "female":
-        // form.setFieldsValue({ note: "Hi, lady!" });
-        return;
-      case "other":
-        // form.setFieldsValue({ note: "Hi there!" });
-        return;
-      default:
-        return;
+  const normFile = (e) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
     }
+    return e && e.fileList;
   };
 
   return (
-    <Form {...layout} name="basic" onSubmit={onFinish}>
-      <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) =>
-          prevValues.gender !== currentValues.gender
-        }
-      >
-        {({ getFieldValue }) => {
-          return getFieldValue("gender") === "other" ? (
-            <Form.Item
-              name="customizeGender"
-              label="Customize Gender"
-              rules={[{ required: true }]}
-            >
-              <Input />
+    <>
+      <Form {...layout}>
+        <Form.Item label="Tambah Data">
+          <Select style={{ width: 150 }} onChange={handleChange}>
+            <Option value="kepangkatan">Kepangkatan</Option>
+            <Option value="pendidikan">Pendidikan</Option>
+            <Option value="pengabdian">Pengabdian</Option>
+            <Option value="pengajaran">Pengajaran</Option>
+            <Option value="sertifikasi">Sertifikasi</Option>
+          </Select>
+        </Form.Item>
+
+        <Divider></Divider>
+        {Object.keys(formControl).map((field, i) => {
+          return (
+            <Form.Item key={i} label={field}>
+              <Input type={formControl[field]} />
             </Form.Item>
-          ) : null;
-        }}
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+          );
+        })}
+
+        <Form.Item
+          name="upload"
+          label="Upload"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload name="logo" action="/upload.do" listType="picture">
+            <Button>Click to upload</Button>
+          </Upload>
+        </Form.Item>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
 };
