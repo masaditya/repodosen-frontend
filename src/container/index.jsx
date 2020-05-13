@@ -10,6 +10,7 @@ import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
 import { toast } from "react-toastify";
 import { FormDataPages } from "./content/FormData/FormDataPages";
+import { FormUpdatePages } from "./content/FormUpdate/FormUpdatePages";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
@@ -93,6 +94,8 @@ export const MainContainer = () => {
               {/* form */}
 
               <Route path="/add" component={FormDataPages} />
+
+              <Route path="/update" component={FormUpdatePages} />
             </Switch>
           </div>
         </Content>

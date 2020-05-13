@@ -14,6 +14,7 @@ export const MainPages = (props) => {
   useEffect(() => {
     GetAllData(props.location.pathname).then((res) => {
       setRepos(res.data);
+      console.log(res.data);
       setLoading(false);
     });
   }, [props.location.pathname]);
@@ -30,9 +31,11 @@ export const MainPages = (props) => {
           return (
             <Col lg={8} md={12} sm={24} key={i}>
               <Card
-                onClick={(e) => history.push("/add", { repo })}
                 actions={[
-                  <EditOutlined key="edit" />,
+                  <EditOutlined
+                    key="edit"
+                    onClick={(e) => history.push("/update", { repo })}
+                  />,
                   <DeleteOutlined key="delete" />,
                 ]}
               >
