@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { useLocation } from "react-router-dom";
 import { Card, Skeleton, Row, Col, Divider } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import Meta from "antd/lib/card/Meta";
 import { GetAllData } from "../../../context/actions/actions";
 import { useHistory } from "react-router-dom";
@@ -32,9 +32,13 @@ export const MainPages = (props) => {
             <Col lg={8} md={12} sm={24} key={i}>
               <Card
                 actions={[
+                  <EyeOutlined
+                    key="detail"
+                    onClick={() => history.push("/detail", { repo })}
+                  />,
                   <EditOutlined
-                    key="edit"
-                    onClick={(e) => history.push("/update", { repo })}
+                    key="update"
+                    onClick={() => history.push("/update", { repo })}
                   />,
                   <DeleteOutlined key="delete" />,
                 ]}
