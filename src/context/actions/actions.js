@@ -59,3 +59,23 @@ export const GetAllData = async (pathname) => {
     })
   return response
 }
+
+export const CreateData = async (pathname, data) => {
+  const url = "http://localhost:8000" + pathname
+  console.log(data)
+  const response = await Axios.post(url, data, config).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+
+  return response
+}
+
+export const stringToUppercase = (str) => {
+  const log = str.split("_").map((word) => {
+    const tmp = word.charAt(0).toUpperCase() + word.slice(1);
+    return tmp;
+  });
+  return log.join(" ");
+};

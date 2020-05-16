@@ -26,7 +26,7 @@ export const Sidenav = () => {
         }}
       >
         <Menu theme="dark" mode="inline">
-          {/* <Avatar size="large" icon={<UserOutlined />} /> */}
+            
         </Menu>
       </div>
 

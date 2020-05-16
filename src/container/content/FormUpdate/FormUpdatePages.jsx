@@ -2,6 +2,7 @@ import React from "react";
 
 import { useHistory } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import { stringToUppercase } from "../../../context/actions/actions";
 
 export const FormUpdatePages = () => {
   const history = useHistory();
@@ -20,22 +21,8 @@ export const FormUpdatePages = () => {
     console.log("Success:", values);
   };
 
-  const stringToUppercase = (str) => {
-    const log = str.split("_").map((word) => {
-      const tmp = word.charAt(0).toUpperCase() + word.slice(1);
-      return tmp;
-    });
-    return log.join(" ");
-  };
-
   return (
-    <Form
-      {...layout}
-      name="basic"
-      onSubmit={onFinish}
-      // onFinish={onFinish}
-      // onFinishFailed={onFinishFailed}
-    >
+    <Form {...layout} name="basic" onSubmit={onFinish}>
       {fields.map((field) => {
         return (
           <Form.Item

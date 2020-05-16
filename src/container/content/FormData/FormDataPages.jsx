@@ -2,9 +2,18 @@ import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
 import { Select, Form, Divider, Button, Input, Upload } from "antd";
 import { models } from "../../../types";
+import { FileField } from "./FileField";
+import Axios from "axios";
+import {
+  CreateData,
+  stringToUppercase,
+} from "../../../context/actions/actions";
 
 export const FormDataPages = () => {
-  const [formControl, setFormControl] = useState(models.kepangkatan);
+  const [formControl, setFormControl] = useState("kepangkatan");
+  const [uploading, setUploading] = useState(false);
+
+  const [inputText, setInputText] = useState({});
   const [fileList, setFileList] = useState([]);
 
   const { Option } = Select;
@@ -18,29 +27,67 @@ export const FormDataPages = () => {
     wrapperCol: { offset: 8, span: 16 },
   };
 
-  const handleChange = (value) => {
-    console.log(models[value]);
-    setFormControl(models[value]);
+  //
+
+  const handleChange = (e) => {
+    const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
+    setInputText(tmp);
   };
 
-  const stringToUppercase = (str) => {
-    const log = str.split("_").map((word) => {
-      const tmp = word.charAt(0).toUpperCase() + word.slice(1);
-      return tmp;
+  const handleUpload = () => {
+    // const { fileList } = this.state;
+    const formData = new FormData();
+    fileList.forEach((file) => {
+      formData.append("files[]", file);
+      console.log(fileList);
     });
-    return log.join(" ");
+
+    setUploading(true);
+    // You can use any AJAX library you like
+    // reqwest({
+    //   url: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    //   method: "post",
+    //   processData: false,
+    //   data: formData,
+    //   success: () => {
+    //     this.setState({
+    //       fileList: [],
+    //       uploading: false,
+    //     });
+    //     message.success("upload successfully.");
+    //   },
+    //   error: () => {
+    //     this.setState({
+    //       uploading: false,
+    //     });
+    //     message.error("upload failed.");
+    //   },
+    // });
   };
 
-  const formHandlerChange = (e) => {
-    if (Array.isArray(e)) {
-      console.log(e);
-    }
-    console.log(e);
+  const uploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+    setUploading(true);
+
+    CreateData("/" + formControl, { ...inputText, fileList }).then((res) => {
+      console.log(res);
+      setUploading(false);
+    });
   };
 
   return (
@@ -50,7 +97,7 @@ export const FormDataPages = () => {
           <Select
             defaultValue="kepangkatan"
             style={{ width: 150 }}
-            onChange={handleChange}
+            onChange={(e) => setFormControl(e)}
           >
             <Option value="kepangkatan">Kepangkatan</Option>
             <Option value="pendidikan">Pendidikan</Option>
@@ -61,8 +108,8 @@ export const FormDataPages = () => {
         </Form.Item>
 
         <Divider></Divider>
-        {Object.keys(formControl).map((field, i) => {
-          switch (formControl[field]) {
+        {Object.keys(models[formControl]).map((field, i) => {
+          switch (models[formControl][field]) {
             case "file":
               return (
                 <Form.Item
@@ -70,24 +117,19 @@ export const FormDataPages = () => {
                   name={field}
                   label={stringToUppercase(field)}
                 >
-                  <Upload
-                    action={null}
-                    name={field}
-                    listType="picture"
-                    onChange={(e) => formHandlerChange(e)}
-                    beforeUpload={(file) => {
-                      console.log(file);
-                      setFileList([...fileList, file]);
-                    }}
-                  >
-                    <Button>Click to upload</Button>
-                  </Upload>
+                  <FileField
+                    showUploadList={false}
+                    fileList={fileList}
+                    uploading={uploading}
+                    handleUpload={handleUpload}
+                    uploadProps={uploadProps}
+                  />
                 </Form.Item>
               );
             case "text":
               return (
                 <Form.Item key={i} label={stringToUppercase(field)}>
-                  <Input name={field} />
+                  <Input onChange={(e) => handleChange(e)} name={field} />
                 </Form.Item>
               );
             default:
