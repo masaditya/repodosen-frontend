@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
 import { Select, Form, Divider, Button, DatePicker, Input } from "antd";
 import { models } from "../../../types";
 import { FileField } from "./FileField";
@@ -7,14 +6,14 @@ import {
   CreateData,
   stringToUppercase,
 } from "../../../context/actions/actions";
+import { toast } from "react-toastify";
 
 export const FormDataPages = () => {
+  // initialize state
   const [formControl, setFormControl] = useState("kepangkatan");
   const [uploading, setUploading] = useState(false);
-
   const [inputText, setInputText] = useState({});
   const [fileList, setFileList] = useState([]);
-
   const { Option } = Select;
 
   // Layout
@@ -26,6 +25,7 @@ export const FormDataPages = () => {
     wrapperCol: { offset: 8, span: 16 },
   };
 
+  // handle input file
   const uploadProps = {
     onRemove: (file) => {
       const index = fileList.indexOf(file);
@@ -41,8 +41,7 @@ export const FormDataPages = () => {
     fileList,
   };
 
-  //
-
+  // handle input text
   const handleChange = (e) => {
     const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
     setInputText(tmp);
@@ -51,29 +50,34 @@ export const FormDataPages = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setUploading(true);
-    const formData = new FormData();
+
+    let formData = new FormData();
 
     // mengisi formData dengan text field
-    Object.keys(inputText).map((field) => {
+    Object.keys(inputText).forEach((field) => {
       formData.set(field, inputText[field]);
-      console.log(field, inputText[field]);
     });
 
     // mengisi formData dengan file
-    // fileList.forEach((file) => {
-    formData.append("files", fileList);
-    console.log(fileList);
-    // });
+    fileList.forEach((file) => {
+      formData.append("file", file);
+    });
 
     CreateData("/" + formControl, formData).then((res) => {
-      console.log(res);
+      // membuat toast notifikasi
+      if (res.success) {
+        toast.success(res.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        toast.error(res.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
+      // set loading
       setUploading(false);
     });
-  };
-
-  const handleFiles = (e) => {
-    const newFile = e.target.files[0];
-    console.log(fileList)
   };
 
   const handleDate = (e, dateString) => {
@@ -83,7 +87,11 @@ export const FormDataPages = () => {
 
   return (
     <>
-      <Form {...layout} onSubmit={(e) => handleSubmit(e)}>
+      <Form
+        {...layout}
+        encType="multipart/form-data"
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <Form.Item label="Tambah Data">
           <Select
             defaultValue="kepangkatan"
@@ -92,14 +100,19 @@ export const FormDataPages = () => {
           >
             <Option value="kepangkatan">Kepangkatan</Option>
             <Option value="pendidikan">Pendidikan</Option>
+            <Option value="penelitian">Penelitian</Option>
             <Option value="pengabdian">Pengabdian</Option>
             <Option value="pengajaran">Pengajaran</Option>
+            <Option value="pelatihan">Pelatihan</Option>
             <Option value="sertifikasi">Sertifikasi</Option>
           </Select>
         </Form.Item>
 
         <Divider></Divider>
+
         {Object.keys(models[formControl]).map((field, i) => {
+          // switch input tipe text, file, number, date ?
+
           switch (models[formControl][field]) {
             case "file":
               return (
@@ -108,12 +121,7 @@ export const FormDataPages = () => {
                   name={field}
                   label={stringToUppercase(field)}
                 >
-                  {/* <FileField uploadProps={uploadProps} /> */}
-                  <input
-                    name={field}
-                    type="file"
-                    onChange={(e) => handleFiles(e)}
-                  />
+                  <FileField uploadProps={uploadProps} />
                 </Form.Item>
               );
             case "text":
@@ -141,11 +149,13 @@ export const FormDataPages = () => {
                 </Form.Item>
               );
             default:
-              break;
+              return null;
           }
         })}
+
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          {/* button submit */}
+          <Button loading={uploading} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
