@@ -62,8 +62,17 @@ export const GetAllData = async (pathname) => {
 
 export const CreateData = async (pathname, data) => {
   const url = "http://localhost:8000" + pathname
-  console.log(data)
-  const response = await Axios.post(url, data, config).then(res => {
+  console.log(url)
+  console.log(...data)
+  const response = await Axios({
+    method: 'post',
+    url: url,
+    data: data,
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token"),
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(res => {
     console.log(res)
   }).catch(err => {
     console.log(err)

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
-import { Select, Form, Divider, Button, Input, Upload } from "antd";
+import { Select, Form, Divider, Button, DatePicker, Input } from "antd";
 import { models } from "../../../types";
 import { FileField } from "./FileField";
-import Axios from "axios";
 import {
   CreateData,
   stringToUppercase,
@@ -27,44 +26,6 @@ export const FormDataPages = () => {
     wrapperCol: { offset: 8, span: 16 },
   };
 
-  //
-
-  const handleChange = (e) => {
-    const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
-    setInputText(tmp);
-  };
-
-  const handleUpload = () => {
-    // const { fileList } = this.state;
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("files[]", file);
-      console.log(fileList);
-    });
-
-    setUploading(true);
-    // You can use any AJAX library you like
-    // reqwest({
-    //   url: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    //   method: "post",
-    //   processData: false,
-    //   data: formData,
-    //   success: () => {
-    //     this.setState({
-    //       fileList: [],
-    //       uploading: false,
-    //     });
-    //     message.success("upload successfully.");
-    //   },
-    //   error: () => {
-    //     this.setState({
-    //       uploading: false,
-    //     });
-    //     message.error("upload failed.");
-    //   },
-    // });
-  };
-
   const uploadProps = {
     onRemove: (file) => {
       const index = fileList.indexOf(file);
@@ -80,14 +41,44 @@ export const FormDataPages = () => {
     fileList,
   };
 
+  //
+
+  const handleChange = (e) => {
+    const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
+    setInputText(tmp);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setUploading(true);
+    const formData = new FormData();
 
-    CreateData("/" + formControl, { ...inputText, fileList }).then((res) => {
+    // mengisi formData dengan text field
+    Object.keys(inputText).map((field) => {
+      formData.set(field, inputText[field]);
+      console.log(field, inputText[field]);
+    });
+
+    // mengisi formData dengan file
+    // fileList.forEach((file) => {
+    formData.append("files", fileList);
+    console.log(fileList);
+    // });
+
+    CreateData("/" + formControl, formData).then((res) => {
       console.log(res);
       setUploading(false);
     });
+  };
+
+  const handleFiles = (e) => {
+    const newFile = e.target.files[0];
+    console.log(fileList)
+  };
+
+  const handleDate = (e, dateString) => {
+    console.log(e);
+    console.log(dateString);
   };
 
   return (
@@ -117,12 +108,11 @@ export const FormDataPages = () => {
                   name={field}
                   label={stringToUppercase(field)}
                 >
-                  <FileField
-                    showUploadList={false}
-                    fileList={fileList}
-                    uploading={uploading}
-                    handleUpload={handleUpload}
-                    uploadProps={uploadProps}
+                  {/* <FileField uploadProps={uploadProps} /> */}
+                  <input
+                    name={field}
+                    type="file"
+                    onChange={(e) => handleFiles(e)}
                   />
                 </Form.Item>
               );
@@ -130,6 +120,24 @@ export const FormDataPages = () => {
               return (
                 <Form.Item key={i} label={stringToUppercase(field)}>
                   <Input onChange={(e) => handleChange(e)} name={field} />
+                </Form.Item>
+              );
+
+            case "number":
+              return (
+                <Form.Item key={i} label={stringToUppercase(field)}>
+                  <Input
+                    type="number"
+                    onChange={(e) => handleChange(e)}
+                    name={field}
+                  />
+                </Form.Item>
+              );
+
+            case "date":
+              return (
+                <Form.Item key={i} label={stringToUppercase(field)}>
+                  <DatePicker name={field} onChange={handleDate} />
                 </Form.Item>
               );
             default:

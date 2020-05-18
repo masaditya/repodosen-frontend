@@ -11,6 +11,11 @@ export const models = {
         file_sp_pengabdian_masyarakat: 'file',
         file_surat_penunjang_tri_dharma: 'file'
     },
+    pelatihan: {
+        nama_kegiatan: "text",
+        no_surat_tugas: "text",
+        file_surat_tugas: "file"
+    },
     pendidikan: {
         no_ijazah: 'text',
         kategori_ijazah: 'text',
@@ -19,11 +24,23 @@ export const models = {
         file_ijazah: 'file',
         file_transkrip: 'file',
     },
+    penelitian: {
+        judul_penelitian: "text",
+        tempat_penelitian: "text",
+        rumpun_ilmu: "text",
+        no_surat_tugas: "text",
+        file_surat_tugas: "file",
+        judul_jurnal: "text",
+        file_jurnal: "file",
+        judul_artikel: "text",
+        file_artikel: "file",
+        file_sertifikat: "file"
+    },
     pengabdian: {
         nama_kegiatan: 'text',
         no_surat_tugas: 'text',
-        judul_laporan_pkm: 'text',
         file_surat_tugas: 'file',
+        judul_laporan_pkm: 'text',
         file_laporan_pkm: 'file'
     },
     pengajaran: {
