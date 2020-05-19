@@ -85,6 +85,31 @@ export const CreateData = async (pathname, data) => {
   return response
 }
 
+export const DeteleData = async (pathname, id) => {
+  const url = "http://localhost:8000/" + pathname + "/" + id
+  const response = await Axios.delete(url, config)
+    .then(res => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Remove data successfully"
+        }
+      } else {
+        return {
+          success: false,
+          message: "Remove data failed"
+        }
+      }
+    }).catch(err => {
+      return {
+        success: false,
+        message: "Added new data failed"
+      }
+    })
+  return response
+}
+
+
 export const stringToUppercase = (str) => {
   const log = str.split("_").map((word) => {
     const tmp = word.charAt(0).toUpperCase() + word.slice(1);

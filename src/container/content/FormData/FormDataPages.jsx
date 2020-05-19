@@ -92,6 +92,8 @@ export const FormDataPages = () => {
         encType="multipart/form-data"
         onSubmit={(e) => handleSubmit(e)}
       >
+
+        
         <Form.Item label="Tambah Data">
           <Select
             defaultValue="kepangkatan"

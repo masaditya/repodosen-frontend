@@ -2,17 +2,12 @@ import React from "react";
 import { Layout, Button, Avatar, Menu, Dropdown } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
-import { Route, Switch, Link, useHistory } from "react-router-dom";
-import { ProfilePages } from "./content/Profile/ProfilePages";
-import { MainPages } from "./content/Main/MainPages";
+import { Switch, Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
 import { toast } from "react-toastify";
-import { FormDataPages } from "./content/FormData/FormDataPages";
-import { FormUpdatePages } from "./content/FormUpdate/FormUpdatePages";
-import { DetailPages } from "./content/Detail/Detail";
-import { DashboardPages } from "./content/Dashboard/DashboardPages";
+import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
@@ -62,46 +57,7 @@ export const MainContainer = () => {
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div style={{ padding: 24, background: "#fff", textAlign: "center" }}>
             <Switch>
-              <Route exact path="/" component={DashboardPages} />
-              <Route path="/profile" component={ProfilePages} />
-              <Route
-                path="/kepangkatan"
-                render={(props) => <MainPages {...props} />}
-              />
-              <Route
-                path="/pendidikan"
-                render={(props) => <MainPages {...props} />}
-              />
-              <Route
-                path="/penelitian"
-                render={(props) => <MainPages {...props} />}
-              />
-              <Route
-                path="/pengabdian"
-                render={(props) => <MainPages {...props} />}
-              />
-              <Route
-                path="/pengajaran"
-                render={(props) => <MainPages {...props} />}
-              />
-              <Route
-                path="/pelatihan"
-                render={(props) => <MainPages {...props} />}
-              />
-              <Route
-                path="/sertifikasi"
-                render={(props) => <MainPages {...props} />}
-              />
-
-              {/* read */}
-
-              <Route path="/detail" component={DetailPages} />
-
-              {/* form */}
-
-              <Route path="/add" component={FormDataPages} />
-
-              <Route path="/update" component={FormUpdatePages} />
+              <NavRoutes />
             </Switch>
           </div>
         </Content>
