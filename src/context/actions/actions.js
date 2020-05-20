@@ -85,6 +85,34 @@ export const CreateData = async (pathname, data) => {
   return response
 }
 
+export const UpdateData = async (pathname, id, data) => {
+  const url = "http://localhost:8000" + pathname + "/" + id
+  console.log(data, url)
+  const response = await Axios.put(url, data, {
+      ...config,
+      'Content-Type': 'multipart/form-data'
+    })
+    .then(res => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Update data successfully"
+        }
+      } else {
+        return {
+          success: false,
+          message: "Update data failed"
+        }
+      }
+    }).catch(err => {
+      return {
+        success: false,
+        message: "Update new data failed"
+      }
+    })
+  return response
+}
+
 export const DeteleData = async (pathname, id) => {
   const url = "http://localhost:8000/" + pathname + "/" + id
   const response = await Axios.delete(url, config)

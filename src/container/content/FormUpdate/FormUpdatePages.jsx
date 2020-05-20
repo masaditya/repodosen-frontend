@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button } from "antd";
-import { stringToUppercase } from "../../../context/actions/actions";
+import { Form, Input, Button, DatePicker } from "antd";
+import {
+  stringToUppercase,
+  UpdateData,
+} from "../../../context/actions/actions";
+import { models } from "../../../types";
+import { FileField } from "../FormData/FileField";
+import { toast } from "react-toastify";
 
 export const FormUpdatePages = () => {
   const [uploading, setUploading] = useState(false);
@@ -15,7 +21,6 @@ export const FormUpdatePages = () => {
 
   const fields = Object.keys(repo);
   fields.shift();
-  console.log(inputText);
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -41,8 +46,9 @@ export const FormUpdatePages = () => {
 
   // handle input text
   const handleChange = (e) => {
-    const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
-    setInputText(tmp);
+    // const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
+    // setInputText(tmp);
+    setInputText({ ...inputText, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -61,42 +67,72 @@ export const FormUpdatePages = () => {
       formData.append("file", file);
     });
 
-    // CreateData("/" + formControl, formData).then((res) => {
-    //   // membuat toast notifikasi
-    //   if (res.success) {
-    //     toast.success(res.message, {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //     });
-    //   } else {
-    //     toast.error(res.message, {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //     });
-    //   }
+    UpdateData(repo.pathname, repo[Object.keys(repo)[1]], formData).then(
+      (res) => {
+        // membuat toast notifikasi
 
-    //   // set loading
-    //   setUploading(false);
-    // });
+        console.log(res);
+        if (res.success) {
+          toast.success(res.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        } else {
+          toast.error(res.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+
+        // set loading
+        setUploading(false);
+      }
+    );
+
+    // CreateData("/" + formControl, formData)
   };
 
   return (
     <Form {...layout} name="basic" onSubmit={handleSubmit}>
-      {fields.map((field) => {
-        return (
-          <Form.Item
-            key={field}
-            label={stringToUppercase(field)}
-            name={field}
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            {console.log()}
-            <Input
-              value={inputText[field]}
-              onChange={(e) =>
-                setInputText({ ...inputText, [field]: e.target.value })
-              }
-            />
-          </Form.Item>
-        );
+      {fields.map((field, i) => {
+        switch (models[repo.pathname.substr(1)][field]) {
+          case "file":
+            return (
+              <Form.Item key={i} name={field} label={stringToUppercase(field)}>
+                <Input disabled value={inputText[field]} name={field} />
+                <FileField uploadProps={uploadProps} />
+              </Form.Item>
+            );
+          case "text":
+            return (
+              <Form.Item key={i} label={stringToUppercase(field)}>
+                <Input
+                  value={inputText[field]}
+                  onChange={(e) => handleChange(e)}
+                  name={field}
+                />
+              </Form.Item>
+            );
+
+          case "number":
+            return (
+              <Form.Item key={i} label={stringToUppercase(field)}>
+                <Input
+                  type="number"
+                  onChange={(e) => handleChange(e)}
+                  name={field}
+                  value={inputText[field]}
+                />
+              </Form.Item>
+            );
+
+          case "date":
+            return (
+              <Form.Item key={i} label={stringToUppercase(field)}>
+                {/* <DatePicker name={field} onChange={handleDate} /> */}
+              </Form.Item>
+            );
+          default:
+            return null;
+        }
       })}
 
       <Form.Item {...tailLayout}>
