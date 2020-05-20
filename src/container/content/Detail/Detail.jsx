@@ -8,9 +8,32 @@ export const DetailPages = () => {
 
   return (
     <div>
-      <Button onClick={() => history.goBack()}>Back</Button>
+      <div style={{ textAlign: "left" }}>
+        <Button onClick={() => history.goBack()}>Back</Button>
+      </div>
+      {Object.keys(repo)
+        .splice(2, 99)
+        .map((field) => {
+          return (
+            <div
+              style={{
+                marginTop: "20px",
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "1em 4em",
+                boxShadow: "0px 0px 87px -43px rgba(153,153,153,1)",
+                borderRadius: "1em",
+                border: "0.5px solid #f0f0f0",
+              }}
+            >
+              <p>{field}</p>
 
-      {JSON.stringify(repo)}
+              <p>{repo[field]}</p>
+            </div>
+          );
+        })}
     </div>
   );
 };

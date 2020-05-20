@@ -22,7 +22,19 @@ export const MainPages = (props) => {
         {props.location.pathname}
       </Divider>
       <Row gutter={[16, 16]}>
-        <RepoItems repos={repos} loading={loading} />
+        {repos.length > 0 ? (
+          <RepoItems
+            repos={repos}
+            loading={loading}
+            pathname={props.location.pathname}
+          />
+        ) : (
+          <img
+            style={{ minWidth: "400px", width: "30%" }}
+            alt="empty"
+            src={require("../../../assets/undraw_empty.png")}
+          />
+        )}
       </Row>
     </div>
   );

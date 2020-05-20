@@ -10,7 +10,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { confirm } = Modal;
 
-export const RepoItems = ({ repos = [], loading }) => {
+export const RepoItems = ({ repos = [], loading, pathname }) => {
   const history = useHistory();
 
   return (
@@ -26,7 +26,7 @@ export const RepoItems = ({ repos = [], loading }) => {
                 />,
                 <EditOutlined
                   key="update"
-                  onClick={() => history.push("/update", { repo })}
+                  onClick={() => history.push("/update", { pathname, ...repo })}
                 />,
                 <DeleteOutlined
                   key="delete"
@@ -38,8 +38,8 @@ export const RepoItems = ({ repos = [], loading }) => {
             >
               <Skeleton loading={loading} avatar active>
                 <Meta
-                  title="Card title"
-                  description="This is the description"
+                  title={repo[Object.keys(repo)[2]]}
+                  description={repo[Object.keys(repo)[3]]}
                 />
               </Skeleton>
             </Card>
