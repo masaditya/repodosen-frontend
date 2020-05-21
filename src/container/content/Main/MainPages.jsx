@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Row, Divider } from "antd";
-import { GetAllData } from "../../../context/actions/actions";
+import {
+  GetAllData,
+  stringToUppercase,
+} from "../../../context/actions/actions";
 import { RepoItems } from "../../../components/RepoItems/RepoItems";
 
 export const MainPages = (props) => {
@@ -19,7 +22,7 @@ export const MainPages = (props) => {
         orientation="left"
         style={{ color: "#333", fontWeight: "normal" }}
       >
-        {props.location.pathname}
+        {stringToUppercase(props.location.pathname.substr(1))}
       </Divider>
       <Row gutter={[16, 16]}>
         {repos.length > 0 ? (

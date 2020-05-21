@@ -15,7 +15,6 @@ export const LoginPages = () => {
     //
 
     const result = await Login(username, password);
-    // console.log(result);
     if (result.type === LOGIN_SUCCESS) {
       toast.success("Hello, Welcome back !", {
         position: toast.POSITION.TOP_RIGHT,

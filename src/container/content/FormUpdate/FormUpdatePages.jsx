@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button, DatePicker } from "antd";
+import { Form, Input, Button } from "antd";
 import {
   stringToUppercase,
   UpdateData,
@@ -70,8 +70,6 @@ export const FormUpdatePages = () => {
     UpdateData(repo.pathname, repo[Object.keys(repo)[1]], formData).then(
       (res) => {
         // membuat toast notifikasi
-
-        console.log(res);
         if (res.success) {
           toast.success(res.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -136,7 +134,7 @@ export const FormUpdatePages = () => {
       })}
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button loading={uploading} type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>

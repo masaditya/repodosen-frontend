@@ -67,7 +67,6 @@ const showConfirm = (repo) => {
       });
     },
     onCancel() {
-      console.log("Cancel");
     },
   });
 };

@@ -81,8 +81,6 @@ export const FormDataPages = () => {
   };
 
   const handleDate = (e, dateString) => {
-    console.log(e);
-    console.log(dateString);
   };
 
   return (

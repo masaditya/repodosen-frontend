@@ -5,11 +5,7 @@ import {
   LOGOUT_START
 } from "../actionTypes";
 
-const config = {
-  headers: {
-    'Authorization': "Bearer " + localStorage.getItem("token")
-  }
-}
+
 
 export const Login = async (username, password) => {
   const response = await Axios.post("http://localhost:8000/login", {
@@ -17,7 +13,6 @@ export const Login = async (username, password) => {
       passwordLogin: password,
     })
     .then((res) => {
-      console.log(res.data)
       if (res.data.success) {
         localStorage.setItem("token", res.data.token)
         return {
@@ -50,7 +45,11 @@ export const Logout = () => {
 
 export const GetAllData = async (pathname) => {
   const url = "http://localhost:8000" + pathname
-  console.log(url)
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
   const response = await Axios.get(url, config)
     .then(res => {
       return res
@@ -62,7 +61,11 @@ export const GetAllData = async (pathname) => {
 
 export const CreateData = async (pathname, data) => {
   const url = "http://localhost:8000" + pathname
-  console.log(data)
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
   const response = await Axios.post(url, data, {
       ...config,
       'Content-Type': 'multipart/form-data'
@@ -87,7 +90,11 @@ export const CreateData = async (pathname, data) => {
 
 export const UpdateData = async (pathname, id, data) => {
   const url = "http://localhost:8000" + pathname + "/" + id
-  console.log(data, url)
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
   const response = await Axios.put(url, data, {
       ...config,
       'Content-Type': 'multipart/form-data'
@@ -115,6 +122,11 @@ export const UpdateData = async (pathname, id, data) => {
 
 export const DeteleData = async (pathname, id) => {
   const url = "http://localhost:8000/" + pathname + "/" + id
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
   const response = await Axios.delete(url, config)
     .then(res => {
       if (res.status === 200) {
@@ -136,6 +148,70 @@ export const DeteleData = async (pathname, id) => {
     })
   return response
 }
+
+
+// Profiles
+
+export const GetProfiles = async () => {
+  const url = "http://localhost:8000/user/profile/"
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
+  const response = await Axios.get(url, config)
+    .then(res => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          data: res.data[0]
+
+        }
+      } else {
+        return {
+          success: false,
+          data: {}
+        }
+      }
+    }).catch(err => {
+      return {
+        success: false,
+        data: {}
+      }
+    })
+  return response
+}
+
+export const GetAllDosen = async () => {
+  const url = "http://localhost:8000/user/dosen/"
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
+  const response = await Axios.get(url, config)
+    .then(res => {
+      console.log(res)
+      // if (res.status === 200) {
+      //   return {
+      //     success: true,
+      //     data: res.data[0]
+      //   }
+      // } else {
+      //   return {
+      //     success: false,
+      //     data: {}
+      //   }
+      // }
+    }).catch(err => {
+      return {
+        success: false,
+        data: {}
+      }
+    })
+  return response
+}
+
 
 
 export const stringToUppercase = (str) => {
