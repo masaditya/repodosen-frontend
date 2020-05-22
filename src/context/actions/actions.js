@@ -45,6 +45,7 @@ export const Logout = () => {
 
 export const GetAllData = async (pathname) => {
   const url = "http://localhost:8000" + pathname
+  console.log(url)
   const config = {
     headers: {
       'Authorization': "Bearer " + localStorage.getItem("token")

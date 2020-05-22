@@ -12,6 +12,9 @@ export const NavRoutes = () => {
     <>
       <Route exact path="/" component={DashboardPages} />
       <Route path="/profile" component={ProfilePages} />
+      {/*  */}
+      <Route path="/user/dosen" render={(props) => <MainPages {...props} />} />
+      {/*  */}
       <Route path="/kepangkatan" render={(props) => <MainPages {...props} />} />
       <Route path="/pendidikan" render={(props) => <MainPages {...props} />} />
       <Route path="/penelitian" render={(props) => <MainPages {...props} />} />

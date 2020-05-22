@@ -8,6 +8,9 @@ import { RootContext } from "../../context/Context";
 export const Sidenav = () => {
   const history = useHistory();
   const { state } = useContext(RootContext);
+
+  console.log(state.isAdmin);
+
   return (
     <Sider
       style={{
@@ -25,14 +28,12 @@ export const Sidenav = () => {
           margin: "16px",
         }}
       >
-        <Menu theme="dark" mode="inline">
-            
-        </Menu>
+        <Menu theme="dark" mode="inline"></Menu>
       </div>
 
       <Menu theme="dark" mode="inline">
         {state.isAdmin && (
-          <Menu.Item key="0" onClick={() => history.push("/dosen")}>
+          <Menu.Item key="0" onClick={() => history.push("/user/dosen")}>
             <Icon type="usergroup-add" />
             <span className="nav-text">Dosen</span>
           </Menu.Item>

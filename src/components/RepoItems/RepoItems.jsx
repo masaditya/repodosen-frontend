@@ -13,29 +13,36 @@ const { confirm } = Modal;
 export const RepoItems = ({ repos = [], loading, pathname }) => {
   const history = useHistory();
 
+  let actionsButton = (repo) => {
+    let buttons = [
+      <EyeOutlined
+        key="detail"
+        onClick={() => history.push("/detail", { repo })}
+      />,
+      <EditOutlined
+        key="update"
+        onClick={() => history.push("/update", { pathname, ...repo })}
+      />,
+      <DeleteOutlined
+        key="delete"
+        onClick={() => {
+          showConfirm(repo);
+        }}
+      />,
+    ];
+
+    if (pathname === "/user/dosen") {
+      buttons.splice(1, 1);
+    }
+    return buttons;
+  };
+
   return (
     <>
       {repos.map((repo, i) => {
         return (
           <Col lg={8} md={12} sm={24} key={i}>
-            <Card
-              actions={[
-                <EyeOutlined
-                  key="detail"
-                  onClick={() => history.push("/detail", { repo })}
-                />,
-                <EditOutlined
-                  key="update"
-                  onClick={() => history.push("/update", { pathname, ...repo })}
-                />,
-                <DeleteOutlined
-                  key="delete"
-                  onClick={() => {
-                    showConfirm(repo);
-                  }}
-                />,
-              ]}
-            >
+            <Card actions={actionsButton(repo)}>
               <Skeleton loading={loading} avatar active>
                 <Meta
                   title={repo[Object.keys(repo)[2]]}
@@ -66,7 +73,6 @@ const showConfirm = (repo) => {
         }
       });
     },
-    onCancel() {
-    },
+    onCancel() {},
   });
 };
