@@ -9,7 +9,7 @@ export const Sidenav = () => {
   const history = useHistory();
   const { state } = useContext(RootContext);
 
-  console.log(state.isAdmin);
+  console.log(state);
 
   return (
     <Sider

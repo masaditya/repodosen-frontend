@@ -13,8 +13,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-          isAdmin: action.payload.isAdmin,
-          token: action.payload.token,
+            token: action.payload.token,
       };
     case LOGOUT_START:
       localStorage.clear();
