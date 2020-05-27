@@ -32,12 +32,14 @@ export const Sidenav = () => {
       </div>
 
       <Menu theme="dark" mode="inline">
+        
         {state.isAdmin && (
           <Menu.Item key="0" onClick={() => history.push("/user/dosen")}>
             <Icon type="usergroup-add" />
             <span className="nav-text">Dosen</span>
           </Menu.Item>
         )}
+
         <Menu.Item key="1" onClick={() => history.push("/kepangkatan")}>
           <Icon type="user" />
           <span className="nav-text">Kepangkatan</span>

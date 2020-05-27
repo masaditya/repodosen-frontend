@@ -3,18 +3,20 @@ import {
   GetProfiles,
   stringToUppercase,
 } from "../../../context/actions/actions";
-import { Spin, Col } from "antd";
+import { Spin, Col, Button, Input } from "antd";
+
+import { EditOutlined } from "@ant-design/icons";
 
 export const ProfilePages = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
 
+  const [editedField, setEditedField] = useState([]);
+
   useEffect(() => {
     GetProfiles().then((res) => {
       setUserData(res.data);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(false);
     });
   }, []);
 
@@ -33,7 +35,7 @@ export const ProfilePages = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "1em 4em",
+                  padding: "1em 2em",
                   boxShadow: "0px 0px 87px -43px rgba(153,153,153,1)",
                   borderRadius: ".5em",
                   border: "0.5px solid #f0f0f0",
@@ -41,12 +43,36 @@ export const ProfilePages = () => {
                 key={i}
               >
                 <p style={{ margin: 0 }}> {stringToUppercase(field)} </p>
-                <b>{userData[field]}</b>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  {!editedField.includes(i) ? (
+                    <b>{userData[field]}</b>
+                  ) : (
+                    <Input
+                      name={field}
+                      type="text"
+                      value={userData[field]}
+                      onChange={(e) => {
+                        setUserData({ ...userData, [field]: e.target.value });
+                      }}
+                    />
+                  )}
+                  <Button
+                    onClick={() => {
+                      setEditedField([...editedField, i]);
+                    }}
+                    style={{ marginLeft: "20px" }}
+                  >
+                    <EditOutlined />
+                  </Button>
+                </div>
               </div>
             );
           })
         )}
       </Col>
+      <Button onClick={() => console.log(userData)}>Update Data</Button>
     </div>
   );
 };

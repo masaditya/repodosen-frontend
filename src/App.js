@@ -9,7 +9,7 @@ export const App = () => {
   const { state } = useContext(RootContext);
 
   let main = <LoginPages />;
-  
+
   if (state.isAuthenticated) {
     main = <MainContainer />;
   }

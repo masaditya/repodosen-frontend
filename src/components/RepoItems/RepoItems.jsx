@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Col, Card, Skeleton } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
@@ -7,10 +7,13 @@ import { DeteleData } from "../../context/actions/actions";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { RootContext } from "../../context/Context";
 
 const { confirm } = Modal;
 
 export const RepoItems = ({ repos = [], loading, pathname }) => {
+  const { state } = useContext(RootContext);
+
   const history = useHistory();
 
   let actionsButton = (repo) => {
@@ -31,7 +34,7 @@ export const RepoItems = ({ repos = [], loading, pathname }) => {
       />,
     ];
 
-    if (pathname === "/user/dosen") {
+    if (state.isAdmin) {
       buttons.splice(1, 1);
     }
     return buttons;

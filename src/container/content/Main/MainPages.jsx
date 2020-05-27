@@ -11,10 +11,15 @@ export const MainPages = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    GetAllData(props.location.pathname).then((res) => {
-      setRepos(res.data);
-      setLoading(false);
-    });
+    GetAllData(props.location.pathname)
+      .then((res) => {
+        setRepos(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setRepos([]);
+        setLoading(false);
+      });
   }, [props.location.pathname]);
   return (
     <div>

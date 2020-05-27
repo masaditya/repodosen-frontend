@@ -13,6 +13,7 @@ export const Login = async (username, password) => {
       passwordLogin: password,
     })
     .then((res) => {
+      console.log(res)
       if (res.data.success) {
         localStorage.setItem("token", res.data.token)
         return {
@@ -30,6 +31,8 @@ export const Login = async (username, password) => {
       }
     })
     .catch((err) => {
+      console.log(err)
+
       return {
         type: LOGIN_FAILED,
       };

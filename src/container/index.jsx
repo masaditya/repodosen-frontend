@@ -11,27 +11,28 @@ import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
-  const { dispatch } = useContext(RootContext);
+  const { state, dispatch } = useContext(RootContext);
 
   const history = useHistory();
 
   const menu = (
     <Menu>
-      <Menu.Item key="0">
-        <Link to="/profile"> Profile </Link>
-      </Menu.Item>
+      {!state.isAdmin && (
+        <Menu.Item key="0">
+          <Link to="/profile"> Profile </Link>
+        </Menu.Item>
+      )}
       <Menu.Divider />
       <Menu.Item key="1">
-        <p
+        <span
           onClick={() => {
             dispatch(Logout());
-            toast.success("Logout Successful", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
+            toast.success("Logout Successful");
+            history.push("/");
           }}
         >
           Logout
-        </p>
+        </span>
       </Menu.Item>
     </Menu>
   );

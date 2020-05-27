@@ -38,7 +38,7 @@ export const FormDataPages = () => {
       setFileList([...fileList, file]);
       return false;
     },
-    fileList,
+    listType: "picture",
   };
 
   // handle input text
@@ -80,8 +80,7 @@ export const FormDataPages = () => {
     });
   };
 
-  const handleDate = (e, dateString) => {
-  };
+  const handleDate = (e, dateString) => {};
 
   return (
     <>
@@ -90,8 +89,6 @@ export const FormDataPages = () => {
         encType="multipart/form-data"
         onSubmit={(e) => handleSubmit(e)}
       >
-
-        
         <Form.Item label="Tambah Data">
           <Select
             defaultValue="kepangkatan"
