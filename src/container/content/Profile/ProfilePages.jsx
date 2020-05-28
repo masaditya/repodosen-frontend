@@ -10,6 +10,7 @@ import { Spin, Col, Button, Input } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { FileField } from "../FormData/FileField";
+import { useHistory } from "react-router-dom";
 
 export const ProfilePages = () => {
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,8 @@ export const ProfilePages = () => {
   const [editedField, setEditedField] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     GetProfiles()
@@ -84,8 +87,8 @@ export const ProfilePages = () => {
       .catch((err) => {
         console.log(err);
       });
-
     setUploading(false);
+    history.goBack();
   };
 
   return (

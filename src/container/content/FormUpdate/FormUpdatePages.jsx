@@ -21,6 +21,7 @@ export const FormUpdatePages = () => {
 
   const fields = Object.keys(repo);
   fields.shift();
+  
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -82,6 +83,7 @@ export const FormUpdatePages = () => {
 
         // set loading
         setUploading(false);
+        history.goBack();
       }
     );
 
@@ -90,6 +92,9 @@ export const FormUpdatePages = () => {
 
   return (
     <Form {...layout} name="basic" onSubmit={handleSubmit}>
+      <div style={{ textAlign: "left" }}>
+        <Button onClick={() => history.goBack()}>Back</Button>
+      </div>
       {fields.map((field, i) => {
         switch (models[repo.pathname.substr(1)][field]) {
           case "file":

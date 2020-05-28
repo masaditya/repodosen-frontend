@@ -7,6 +7,7 @@ import {
   stringToUppercase,
 } from "../../../context/actions/actions";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 export const FormDataPages = () => {
   // initialize state
@@ -15,6 +16,7 @@ export const FormDataPages = () => {
   const [inputText, setInputText] = useState({});
   const [fileList, setFileList] = useState([]);
   const { Option } = Select;
+  const history = useHistory();
 
   // Layout
   const layout = {
@@ -76,6 +78,7 @@ export const FormDataPages = () => {
 
       // set loading
       setUploading(false);
+      history.goBack();
     });
   };
 
@@ -83,6 +86,9 @@ export const FormDataPages = () => {
 
   return (
     <>
+      <div style={{ textAlign: "left" }}>
+        <Button onClick={() => history.goBack()}>Back</Button>
+      </div>
       <Form
         {...layout}
         encType="multipart/form-data"

@@ -249,6 +249,40 @@ export const UpdatePicture = async (data) => {
   return response
 }
 
+export const ChangePassword = async (oldPass, newPass) => {
+  const url = "http://localhost:8000/user/password/change"
+  const data = {
+    passwordLama: oldPass,
+    passwordBaru: newPass
+  }
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
+  const response = await Axios.patch(url, data, config)
+    .then(res => {
+      console.log(res.data)
+      if (res.data.status) {
+        return {
+          success: true,
+          message: "Update Password successfully"
+        }
+      } else {
+        return {
+          success: false,
+          message: res.data.message
+        }
+      }
+    }).catch(err => {
+      return {
+        success: false,
+        message: "Update new Password failed"
+      }
+    })
+  return response
+}
+
 
 
 export const stringToUppercase = (str) => {

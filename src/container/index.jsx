@@ -24,6 +24,10 @@ export const MainContainer = () => {
       )}
       <Menu.Divider />
       <Menu.Item key="1">
+        <Link to="/update-password"> Update Password </Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="2">
         <span
           onClick={() => {
             dispatch(Logout());

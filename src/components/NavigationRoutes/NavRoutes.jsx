@@ -6,6 +6,7 @@ import { FormDataPages } from "../../container/content/FormData/FormDataPages";
 import { FormUpdatePages } from "../../container/content/FormUpdate/FormUpdatePages";
 import { ProfilePages } from "../../container/content/Profile/ProfilePages";
 import { DashboardPages } from "../../container/content/Dashboard/DashboardPages";
+import { ChangePasswordPages } from "../../container/content/ChangePassword/ChangePasswordPages";
 
 export const NavRoutes = () => {
   return (
@@ -28,6 +29,8 @@ export const NavRoutes = () => {
       <Route path="/add" component={FormDataPages} />
       {/* update */}
       <Route path="/update" component={FormUpdatePages} />
+      {/* change password */}
+      <Route path="/update-password" component={ChangePasswordPages} />
     </>
   );
 };
