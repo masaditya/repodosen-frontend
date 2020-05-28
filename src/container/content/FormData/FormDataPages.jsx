@@ -31,7 +31,6 @@ export const FormDataPages = () => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
-
       setFileList(newFileList);
     },
     beforeUpload: (file) => {

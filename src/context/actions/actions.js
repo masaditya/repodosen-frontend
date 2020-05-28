@@ -186,31 +186,64 @@ export const GetProfiles = async () => {
   return response
 }
 
-export const GetAllDosen = async () => {
-  const url = "http://localhost:8000/user/dosen/"
+export const UpdateProfile = async (data) => {
+  const url = "http://localhost:8000/user/profile/edit"
   const config = {
     headers: {
       'Authorization': "Bearer " + localStorage.getItem("token")
     }
   }
-  const response = await Axios.get(url, config)
+  const response = await Axios.patch(url, data, config)
     .then(res => {
       console.log(res)
-      // if (res.status === 200) {
-      //   return {
-      //     success: true,
-      //     data: res.data[0]
-      //   }
-      // } else {
-      //   return {
-      //     success: false,
-      //     data: {}
-      //   }
-      // }
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Update data successfully"
+        }
+      } else {
+        return {
+          success: false,
+          message: "Update data failed"
+        }
+      }
     }).catch(err => {
       return {
         success: false,
-        data: {}
+        message: "Update new data failed"
+      }
+    })
+  return response
+}
+
+export const UpdatePicture = async (data) => {
+  const url = "http://localhost:8000/user/profile/photo/edit"
+  const config = {
+    headers: {
+      'Authorization': "Bearer " + localStorage.getItem("token")
+    }
+  }
+  const response = await Axios.patch(url, data, {
+      ...config,
+      'Content-Type': 'multipart/form-data'
+    })
+    .then(res => {
+      console.log(res)
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Update picture successfully"
+        }
+      } else {
+        return {
+          success: false,
+          message: "Update pricture failed"
+        }
+      }
+    }).catch(err => {
+      return {
+        success: false,
+        message: "Update new data failed"
       }
     })
   return response
