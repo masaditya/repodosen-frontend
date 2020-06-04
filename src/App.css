@@ -3,3 +3,46 @@
 p {
   margin: 0;
 }
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+}
+
+.login-container {
+  width: 100%;
+  display: flex;
+}
+
+
+.m-auto {
+  margin: auto;
+}
+
+.greeting-text {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: rgb(160, 173, 184);
+}
+
+.login-illustration {
+  max-width: 400px;
+  margin: auto;
+}
+
+.illustration-container {
+  display: none;
+  background-color: #18A4E0;
+  display: flex;
+}
+
+@media only screen and (min-width: 600px) {
+  .login-container {
+    width: 50%;
+    display: flex;
+  }
+
+  .illustration-container {
+    width: 50%;
+  }
+}
