@@ -15,6 +15,16 @@ export const MainContainer = () => {
 
   const history = useHistory();
 
+  let { pathname } = history.location;
+  let prevRoute = history.location.pathname.substring(1);
+
+  const showAddButton = () => {
+    let tmp =
+      pathname.toString() === "/profile" ||
+      pathname.toString() === "/update-password";
+    return tmp;
+  };
+
   const menu = (
     <Menu>
       {!state.isAdmin && (
@@ -51,12 +61,22 @@ export const MainContainer = () => {
             padding: " 15px",
             display: "flex",
             justifyContent: "space-between",
+            flexDirection: "row-reverse",
           }}
         >
-          <Button onClick={() => history.push("/add")}>Add Data</Button>
+          {/* avatar */}
+
           <Dropdown overlay={menu} trigger={["click"]}>
             <Avatar>A</Avatar>
           </Dropdown>
+
+          {/* button add data */}
+
+          {!showAddButton() && (
+            <Button onClick={() => history.push("/add", prevRoute)}>
+              Add Data
+            </Button>
+          )}
         </Header>
 
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>

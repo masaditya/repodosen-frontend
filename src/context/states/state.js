@@ -6,7 +6,15 @@ const getPayload = (token) => {
     const w = jwt.verify(token, "({nD4$d0s})");
     result = w.role === "admin";
   }
-  console.log(result);
+  return result;
+};
+
+const getUsername = (token) => {
+  let result = "";
+  if (token != null) {
+    const w = jwt.verify(token, "({nD4$d0s})");
+    result = w.username
+  }
   return result;
 };
 
@@ -14,4 +22,5 @@ export const initialState = {
   isAuthenticated: localStorage.getItem("token") !== null,
   isAdmin: getPayload(localStorage.getItem("token")),
   token: localStorage.getItem("token"),
+  username: getUsername(localStorage.getItem("token"))
 };

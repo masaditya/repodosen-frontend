@@ -13,9 +13,10 @@ export const DetailPages = () => {
       </div>
       {Object.keys(repo)
         .splice(2, 99)
-        .map((field) => {
+        .map((field, i) => {
           return (
             <div
+              key={i}
               style={{
                 marginTop: "20px",
                 width: "100%",

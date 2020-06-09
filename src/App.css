@@ -26,6 +26,7 @@ p {
 }
 
 .login-illustration {
+  width: 80%;
   max-width: 400px;
   margin: auto;
 }
@@ -33,7 +34,6 @@ p {
 .illustration-container {
   display: none;
   background-color: #18A4E0;
-  display: flex;
 }
 
 @media only screen and (min-width: 600px) {
@@ -43,6 +43,7 @@ p {
   }
 
   .illustration-container {
+    display: flex;
     width: 50%;
   }
 }

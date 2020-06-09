@@ -10,13 +10,20 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 export const FormDataPages = () => {
+  const history = useHistory();
+
+  const prevRoute = history.location.state;
+  console.log(prevRoute);
   // initialize state
-  const [formControl, setFormControl] = useState("kepangkatan");
+  
+  const [formControl, setFormControl] = useState(
+    prevRoute === "" ? "kepangkatan" : prevRoute
+  );
+
   const [uploading, setUploading] = useState(false);
   const [inputText, setInputText] = useState({});
   const [fileList, setFileList] = useState([]);
   const { Option } = Select;
-  const history = useHistory();
 
   // Layout
   const layout = {
@@ -96,7 +103,7 @@ export const FormDataPages = () => {
       >
         <Form.Item label="Tambah Data">
           <Select
-            defaultValue="kepangkatan"
+            defaultValue={prevRoute === "" ? "kepangkatan" : prevRoute}
             style={{ width: 150 }}
             onChange={(e) => setFormControl(e)}
           >
