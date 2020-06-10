@@ -58,5 +58,14 @@ export const models = {
         jangka_waktu_berlaku: 'number',
         file_sertifikat: 'file',
         file_surat_tugas: 'file'
+    },
+    dosen: {
+        nip: "text",
+        nidn: 'text',
+        nama: 'text',
+        email: 'text',
+        jenis_kelamin: 'text',
+        alamat: 'text',
+        username: 'text'
     }
 }

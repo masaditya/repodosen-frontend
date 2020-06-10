@@ -1,11 +1,15 @@
 import Axios from "axios";
-import { LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT_START } from "../actionTypes";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGOUT_START
+} from "../actionTypes";
 
 export const Login = async (username, password) => {
-  const response = await Axios.post("http://192.168.100.2:8000/login", {
-    usernameLogin: username,
-    passwordLogin: password,
-  })
+  const response = await Axios.post(process.env.REACT_APP_IP_SERVER + "/login", {
+      usernameLogin: username,
+      passwordLogin: password,
+    })
     .then((res) => {
       console.log(res);
       if (res.data.success) {
@@ -41,7 +45,7 @@ export const Logout = () => {
 };
 
 export const GetAllData = async (pathname) => {
-  const url = "http://192.168.100.2:8000" + pathname;
+  const url = process.env.REACT_APP_IP_SERVER + pathname;
   console.log(url);
   const config = {
     headers: {
@@ -59,16 +63,16 @@ export const GetAllData = async (pathname) => {
 };
 
 export const CreateData = async (pathname, data) => {
-  const url = "http://192.168.100.2:8000" + pathname;
+  const url = process.env.REACT_APP_IP_SERVER + pathname;
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
   const response = await Axios.post(url, data, {
-    ...config,
-    "Content-Type": "multipart/form-data",
-  })
+      ...config,
+      "Content-Type": "multipart/form-data",
+    })
     .then((res) => {
       if (res.status === 200) {
         return {
@@ -89,16 +93,16 @@ export const CreateData = async (pathname, data) => {
 };
 
 export const UpdateData = async (pathname, id, data) => {
-  const url = "http://192.168.100.2:8000" + pathname + "/" + id;
+  const url = process.env.REACT_APP_IP_SERVER + pathname + "/" + id;
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
   const response = await Axios.put(url, data, {
-    ...config,
-    "Content-Type": "multipart/form-data",
-  })
+      ...config,
+      "Content-Type": "multipart/form-data",
+    })
     .then((res) => {
       if (res.status === 200) {
         return {
@@ -122,7 +126,7 @@ export const UpdateData = async (pathname, id, data) => {
 };
 
 export const DeteleData = async (pathname, id) => {
-  const url = "http://192.168.100.2:8000/" + pathname + "/" + id;
+  const url = process.env.REACT_APP_IP_SERVER + "/" + pathname + "/" + id;
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -154,7 +158,7 @@ export const DeteleData = async (pathname, id) => {
 // Profiles
 
 export const GetProfiles = async () => {
-  const url = "http://192.168.100.2:8000/user/profile/";
+  const url = process.env.REACT_APP_IP_SERVER + "/user/profile/";
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -184,7 +188,7 @@ export const GetProfiles = async () => {
 };
 
 export const UpdateProfile = async (data) => {
-  const url = "http://192.168.100.2:8000/user/profile/edit";
+  const url = process.env.REACT_APP_IP_SERVER + "/user/profile/edit";
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -215,16 +219,16 @@ export const UpdateProfile = async (data) => {
 };
 
 export const UpdatePicture = async (data) => {
-  const url = "http://192.168.100.2:8000/user/profile/photo/edit";
+  const url = process.env.REACT_APP_IP_SERVER + "/user/profile/photo/edit";
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   };
   const response = await Axios.patch(url, data, {
-    ...config,
-    "Content-Type": "multipart/form-data",
-  })
+      ...config,
+      "Content-Type": "multipart/form-data",
+    })
     .then((res) => {
       console.log(res);
       if (res.status === 200) {
@@ -249,7 +253,7 @@ export const UpdatePicture = async (data) => {
 };
 
 export const ChangePassword = async (oldPass, newPass) => {
-  const url = "http://192.168.100.2:8000/user/password/change";
+  const url = process.env.REACT_APP_IP_SERVER + "/user/password/change";
   const data = {
     passwordLama: oldPass,
     passwordBaru: newPass,

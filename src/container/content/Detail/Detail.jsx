@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "antd";
+import { stringToUppercase } from "../../../context/actions/actions";
 
 export const DetailPages = () => {
   const history = useHistory();
@@ -29,7 +30,7 @@ export const DetailPages = () => {
                 border: "0.5px solid #f0f0f0",
               }}
             >
-              <p>{field}</p>
+              <p>{stringToUppercase(field)}</p>
 
               <p>{repo[field]}</p>
             </div>

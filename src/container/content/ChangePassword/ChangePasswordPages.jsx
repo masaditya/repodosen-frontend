@@ -47,8 +47,6 @@ export const ChangePasswordPages = () => {
         <Button onClick={() => history.goBack()}>Back</Button>
       </div>
       <Form.Item
-        // validateStatus="error"
-        // help="Should be combination of numbers & alphabets"
         label="Old Password"
         rules={[{ required: true, message: "Please input your username!" }]}
       >

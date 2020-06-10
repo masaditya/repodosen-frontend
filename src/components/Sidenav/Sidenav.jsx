@@ -1,7 +1,7 @@
 import React from "react";
 import Sider from "antd/lib/layout/Sider";
 import { Menu, Icon } from "antd";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useContext } from "react";
 import { RootContext } from "../../context/Context";
 
@@ -24,15 +24,15 @@ export const Sidenav = () => {
         className="logo"
         style={{
           height: "32px",
-          background: "rgba(255, 255, 255, 0.2)",
           margin: "16px",
         }}
       >
-        <Menu theme="dark" mode="inline"></Menu>
+        <Link to="/">
+          <img width="160px" src={require("../../assets/put.png")} alt="hm" />
+        </Link>
       </div>
 
       <Menu theme="dark" mode="inline">
-        
         {state.isAdmin && (
           <Menu.Item key="0" onClick={() => history.push("/user/dosen")}>
             <Icon type="usergroup-add" />

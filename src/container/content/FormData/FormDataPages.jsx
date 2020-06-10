@@ -15,7 +15,7 @@ export const FormDataPages = () => {
   const prevRoute = history.location.state;
   console.log(prevRoute);
   // initialize state
-  
+
   const [formControl, setFormControl] = useState(
     prevRoute === "" ? "kepangkatan" : prevRoute
   );

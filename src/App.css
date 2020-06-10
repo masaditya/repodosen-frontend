@@ -9,11 +9,18 @@ p {
   display: flex;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .login-container {
   width: 100%;
   display: flex;
 }
 
+.button-check {
+  float: right;
+}
 
 .m-auto {
   margin: auto;
@@ -21,6 +28,18 @@ p {
 
 .greeting-text {
   font-size: 2.5em;
+  font-weight: bold;
+  color: rgb(160, 173, 184);
+}
+
+.greeting-text-dashboard {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: rgb(160, 173, 184);
+}
+
+.text-divider {
+  font-size: 1.2em;
   font-weight: bold;
   color: rgb(160, 173, 184);
 }
@@ -34,6 +53,14 @@ p {
 .illustration-container {
   display: none;
   background-color: #18A4E0;
+}
+
+.card-dashboard {
+  margin-top: 15px;
+  border-top-color: #74b9ff;
+  border-top-width: 5px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 
 @media only screen and (min-width: 600px) {

@@ -12,20 +12,27 @@ export const LoginPages = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState({ username: false, password: false });
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    //
 
-    const result = await Login(username, password);
-    if (result.type === LOGIN_SUCCESS) {
-      toast.success("Hello, Welcome back !", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      dispatch(result);
+    if (username === "") {
+      setError({ ...error, username: true });
+    } else if (password === "") {
+      setError({ ...error, password: true });
     } else {
-      toast.error("Invalid Credentials", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      const result = await Login(username, password);
+      if (result.type === LOGIN_SUCCESS) {
+        toast.success("Hello, Welcome back !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        dispatch(result);
+      } else {
+        toast.error("Invalid Credentials", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     }
   };
 
@@ -40,6 +47,8 @@ export const LoginPages = () => {
             Hello, <br /> Welcome Back!
           </h1>
           <Form.Item
+            validateStatus={error.username ? "error" : ""}
+            help={error.username ? "username is required!" : ""}
             label="Username"
             name="username"
             rules={[{ required: true, message: "Please input your username!" }]}
@@ -53,6 +62,8 @@ export const LoginPages = () => {
           </Form.Item>
 
           <Form.Item
+            validateStatus={error.password ? "error" : ""}
+            help={error.password ? "password is required!" : ""}
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}

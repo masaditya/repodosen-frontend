@@ -23,11 +23,10 @@ export const MainPages = (props) => {
   }, [props.location.pathname]);
   return (
     <div>
-      <Divider
-        orientation="left"
-        style={{ color: "#333", fontWeight: "normal" }}
-      >
-        {stringToUppercase(props.location.pathname.substr(1))}
+      <Divider orientation="left" style={{ color: "#333" }}>
+        <p className="text-divider">
+          {stringToUppercase(props.location.pathname.substr(1))}
+        </p>
       </Divider>
       <Row gutter={[16, 16]}>
         {repos.length > 0 ? (
