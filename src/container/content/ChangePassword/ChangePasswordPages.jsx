@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChangePassword } from "../../../context/actions/actions";
@@ -33,9 +33,15 @@ export const ChangePasswordPages = () => {
       setError(false);
       ChangePassword(oldPassword, newPassword).then((res) => {
         if (res.success) {
-          toast.success(res.message);
+          notification.success({
+            message: res.message,
+          });
           history.goBack();
-        } else toast.error(res.message);
+        } else {
+          notification.error({
+            message: res.message,
+          });
+        }
       });
     } else {
       setError(true);

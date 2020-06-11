@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { Col, Card, Skeleton } from "antd";
+import { Col, Card, Skeleton, notification } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { DeteleData } from "../../context/actions/actions";
 import { Modal } from "antd";
-import { toast } from "react-toastify";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { RootContext } from "../../context/Context";
 
@@ -70,9 +69,15 @@ const showConfirm = (repo) => {
       const id = repo[firstField]; // id : 5
       DeteleData(pathname, id).then((res) => {
         if (res.success) {
-          toast.success(res.message);
+          notification.success({
+            message: "Deleted data from " + pathname,
+            description: res.message,
+          });
         } else {
-          toast.success(res.message);
+          notification.success({
+            message: "Deleted data from " + pathname,
+            description: res.message,
+          });
         }
       });
     },

@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { RootContext } from "../../context/Context";
 import { Login } from "../../context/actions/actions";
-import { toast } from "react-toastify";
 import { LOGIN_SUCCESS } from "../../context/actionTypes";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import login_illustraion from "../../assets/undraw_authentication_fsn5.svg";
 
 export const LoginPages = () => {
@@ -24,13 +23,16 @@ export const LoginPages = () => {
     } else {
       const result = await Login(username, password);
       if (result.type === LOGIN_SUCCESS) {
-        toast.success("Hello, Welcome back !", {
-          position: toast.POSITION.TOP_RIGHT,
+        notification.success({
+          message: "Login Successfully!",
+          description: "Hello " + username + ", welcome back!",
         });
         dispatch(result);
       } else {
-        toast.error("Invalid Credentials", {
-          position: toast.POSITION.TOP_RIGHT,
+        notification.error({
+          message: "Login Failed!",
+          description:
+            "Try again, make sure you remember username and your password!",
         });
       }
     }

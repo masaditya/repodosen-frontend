@@ -5,10 +5,9 @@ import {
   UpdateProfile,
   UpdatePicture,
 } from "../../../context/actions/actions";
-import { Spin, Col, Button, Input } from "antd";
+import { Spin, Col, Button, Input, Form, notification } from "antd";
 
 import { EditOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
 import { FileField } from "../FormData/FileField";
 import { useHistory } from "react-router-dom";
 
@@ -19,6 +18,7 @@ export const ProfilePages = () => {
   const [editedField, setEditedField] = useState([]);
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [errorField, setErrorField] = useState({});
 
   const history = useHistory();
 
@@ -44,8 +44,19 @@ export const ProfilePages = () => {
       setFileList(newFileList);
     },
     beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-      setEditedField([...editedField, 8]);
+      let erfield = {};
+
+      const typeFile = file.name.split(".").pop().toLowerCase();
+      console.log(typeFile);
+      if (typeFile === "jpg" || typeFile === "jpeg" || typeFile === "png") {
+        erfield = Object.assign(erfield, { foto: false });
+        setFileList([...fileList, file]);
+        setEditedField([...editedField, 8]);
+      } else {
+        erfield = Object.assign(erfield, { foto: true });
+      }
+      setErrorField({ ...errorField, ...erfield });
+
       return false;
     },
     listType: "picture",
@@ -61,12 +72,14 @@ export const ProfilePages = () => {
 
       UpdatePicture(formData).then((res) => {
         if (res.success) {
-          toast.success(res.message, {
-            position: toast.POSITION.TOP_RIGHT,
+          notification.success({
+            message: "Updated profile picture ",
+            description: res.message,
           });
         } else {
-          toast.error(res.message, {
-            position: toast.POSITION.TOP_RIGHT,
+          notification.error({
+            message: "Updated profile picture ",
+            description: res.message,
           });
         }
       });
@@ -75,12 +88,14 @@ export const ProfilePages = () => {
     UpdateProfile(userData)
       .then((res) => {
         if (res.success) {
-          toast.success(res.message, {
-            position: toast.POSITION.TOP_RIGHT,
+          notification.success({
+            message: "Updated profile data ",
+            description: res.message,
           });
         } else {
-          toast.error(res.message, {
-            position: toast.POSITION.TOP_RIGHT,
+          notification.error({
+            message: "Updated profile data ",
+            description: res.message,
           });
         }
       })
@@ -109,7 +124,18 @@ export const ProfilePages = () => {
               style={{ borderRadius: "50%" }}
             />
             <p> {userData.foto} </p>
-            <FileField uploadProps={uploadProps} />
+            <Form.Item
+              validateStatus={errorField["foto"] ? "error" : ""}
+              help={
+                errorField["foto"] ? "File type must be (JPG, JPEG or PNG)" : ""
+              }
+            >
+              <FileField
+                beforeUpload={(file) => uploadProps.beforeUpload(file)}
+                onRemove={(file) => uploadProps.onRemove(file)}
+                listType={uploadProps.listType}
+              />
+            </Form.Item>
 
             {Object.keys(userData).map((field, i) => {
               return (

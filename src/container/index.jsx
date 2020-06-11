@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Button, Avatar, Menu, Dropdown } from "antd";
+import { Layout, Button, Avatar, Menu, Dropdown, notification } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
 import { Switch, Link, useHistory } from "react-router-dom";
@@ -41,7 +41,10 @@ export const MainContainer = () => {
         <span
           onClick={() => {
             dispatch(Logout());
-            toast.success("Logout Successful");
+            notification.success({
+              message: "Logout Successfuly! ",
+              description: "See you again " + state.username,
+            });
             history.push("/");
           }}
         >
@@ -73,7 +76,15 @@ export const MainContainer = () => {
           {/* button add data */}
 
           {!showAddButton() && (
-            <Button onClick={() => history.push("/add", prevRoute)}>
+            <Button
+              onClick={() => {
+                if (state.isAdmin) {
+                  history.push("/add-dosen");
+                } else {
+                  history.push("/add", prevRoute);
+                }
+              }}
+            >
               Add Data
             </Button>
           )}

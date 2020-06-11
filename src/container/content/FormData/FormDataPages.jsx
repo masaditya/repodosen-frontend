@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Select, Form, Divider, Button, DatePicker, Input } from "antd";
+import {
+  Select,
+  Form,
+  Divider,
+  Button,
+  DatePicker,
+  Input,
+  notification,
+} from "antd";
 import { models } from "../../../types";
 import { FileField } from "./FileField";
 import {
   CreateData,
   stringToUppercase,
 } from "../../../context/actions/actions";
-import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 export const FormDataPages = () => {
@@ -125,14 +132,16 @@ export const FormDataPages = () => {
       CreateData("/" + formControl, formData).then((res) => {
         // membuat toast notifikasi
         if (res.success) {
-          toast.success(res.message, {
-            position: toast.POSITION.TOP_RIGHT,
+          notification.success({
+            message: "Added new data to repository " + formControl,
+            description: res.message,
           });
           setUploading(false);
           history.goBack();
         } else {
-          toast.error(res.message, {
-            position: toast.POSITION.TOP_RIGHT,
+          notification.error({
+            message: "Added New Data to " + formControl,
+            description: res.message,
           });
           setUploading(false);
         }
@@ -252,10 +261,6 @@ export const FormDataPages = () => {
           {/* button submit */}
           <Button loading={uploading} type="primary" htmlType="submit">
             Submit
-          </Button>
-
-          <Button onClick={validateField} loading={uploading} type="primary">
-            Check Validate
           </Button>
         </Form.Item>
       </Form>

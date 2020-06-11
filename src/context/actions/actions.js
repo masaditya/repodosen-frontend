@@ -287,6 +287,35 @@ export const ChangePassword = async (oldPass, newPass) => {
   return response;
 };
 
+// admin only 
+export const CreateDosen = async (data) => {
+  const url = process.env.REACT_APP_IP_SERVER + "/user/dosen";
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const response = await Axios.post(url, data, config)
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Added new data successfully",
+        };
+      } else {
+        return {
+          success: false,
+          message: "Added new data failed",
+        };
+      }
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
+
 export const stringToUppercase = (str) => {
   const log = str.split("_").map((word) => {
     const tmp = word.charAt(0).toUpperCase() + word.slice(1);
