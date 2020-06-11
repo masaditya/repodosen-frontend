@@ -108,6 +108,7 @@ export const ProfilePages = () => {
               width="150"
               style={{ borderRadius: "50%" }}
             />
+            <p> {userData.foto} </p>
             <FileField uploadProps={uploadProps} />
 
             {Object.keys(userData).map((field, i) => {

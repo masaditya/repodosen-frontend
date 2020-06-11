@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Form, Divider, Button, DatePicker, Input } from "antd";
 import { models } from "../../../types";
 import { FileField } from "./FileField";
@@ -13,7 +13,6 @@ export const FormDataPages = () => {
   const history = useHistory();
 
   const prevRoute = history.location.state;
-  console.log(prevRoute);
   // initialize state
 
   const [formControl, setFormControl] = useState(
@@ -24,6 +23,13 @@ export const FormDataPages = () => {
   const [inputText, setInputText] = useState({});
   const [fileList, setFileList] = useState([]);
   const { Option } = Select;
+
+  const [errorField, setErrorField] = useState({});
+
+  useEffect(() => {
+    setInputText({});
+    setFileList([]);
+  }, [formControl]);
 
   // Layout
   const layout = {
@@ -36,14 +42,37 @@ export const FormDataPages = () => {
 
   // handle input file
   const uploadProps = {
-    onRemove: (file) => {
+    onRemove: (file, field) => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
+      let tmp = { ...inputText };
+      delete tmp[field];
+      setInputText({ ...tmp });
       setFileList(newFileList);
     },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
+    beforeUpload: (file, index, field) => {
+      setInputText({ ...inputText, [field]: file });
+
+      let erfield = {};
+      let tmp = [...fileList];
+      tmp[index] = file;
+      const typeFile = file.name.split(".").pop().toLowerCase();
+      console.log(typeFile);
+      if (
+        typeFile === "jpg" ||
+        typeFile === "jpeg" ||
+        typeFile === "png" ||
+        typeFile === "pdf"
+      ) {
+        erfield = Object.assign(erfield, { [field]: false });
+        setFileList([...tmp]);
+      } else {
+        erfield = Object.assign(erfield, { [field]: true });
+      }
+      setErrorField({ ...errorField, ...erfield });
+
+      console.log(errorField);
       return false;
     },
     listType: "picture",
@@ -55,41 +84,69 @@ export const FormDataPages = () => {
     setInputText(tmp);
   };
 
+  const validateField = () => {
+    const form = Object.keys(models[formControl]);
+    const input = Object.keys(inputText);
+    let erfield = {};
+    form.forEach((field) => {
+      if (input.includes(field)) {
+        if (inputText[field] !== "") {
+          erfield = Object.assign(erfield, { [field]: false });
+        } else {
+          erfield = Object.assign(erfield, { [field]: true });
+        }
+      } else {
+        erfield = Object.assign(erfield, { [field]: true });
+      }
+    });
+    setErrorField({ ...errorField, ...erfield });
+
+    if (Object.values(erfield).indexOf(true) > -1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setUploading(true);
 
-    let formData = new FormData();
-
-    // mengisi formData dengan text field
-    Object.keys(inputText).forEach((field) => {
-      formData.set(field, inputText[field]);
-    });
-
-    // mengisi formData dengan file
-    fileList.forEach((file) => {
-      formData.append("file", file);
-    });
-
-    CreateData("/" + formControl, formData).then((res) => {
-      // membuat toast notifikasi
-      if (res.success) {
-        toast.success(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-
-      // set loading
+    if (!validateField()) {
+      let formData = new FormData();
+      // mengisi formData dengan text field
+      Object.keys(inputText).forEach((field) => {
+        if (!field.includes("file")) formData.set(field, inputText[field]);
+      });
+      // mengisi formData dengan file
+      fileList.forEach((file) => {
+        if (file) formData.append("file", file);
+      });
+      CreateData("/" + formControl, formData).then((res) => {
+        // membuat toast notifikasi
+        if (res.success) {
+          toast.success(res.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setUploading(false);
+          history.goBack();
+        } else {
+          toast.error(res.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setUploading(false);
+        }
+      });
+    } else {
       setUploading(false);
-      history.goBack();
-    });
+    }
   };
 
-  const handleDate = (e, dateString) => {};
+  const handleDate = (e, dateString, field) => {
+    console.log(e, dateString, field);
+    const tmp = Object.assign(inputText, { [field]: dateString });
+    setInputText(tmp);
+  };
 
   return (
     <>
@@ -127,22 +184,43 @@ export const FormDataPages = () => {
               return (
                 <Form.Item
                   key={i}
-                  name={field}
                   label={stringToUppercase(field)}
+                  validateStatus={errorField[field] ? "error" : ""}
+                  help={
+                    errorField[field]
+                      ? "File type must be (JPG, JPEG, PNG or PDF)"
+                      : ""
+                  }
                 >
-                  <FileField uploadProps={uploadProps} />
+                  <FileField
+                    beforeUpload={(file) =>
+                      uploadProps.beforeUpload(file, i, field)
+                    }
+                    onRemove={(file) => uploadProps.onRemove(file, field)}
+                    listType={uploadProps.listType}
+                  />
                 </Form.Item>
               );
             case "text":
               return (
-                <Form.Item key={i} label={stringToUppercase(field)}>
+                <Form.Item
+                  key={i}
+                  label={stringToUppercase(field)}
+                  validateStatus={errorField[field] ? "error" : ""}
+                  help={errorField[field] ? "This field is required!" : ""}
+                >
                   <Input onChange={(e) => handleChange(e)} name={field} />
                 </Form.Item>
               );
 
             case "number":
               return (
-                <Form.Item key={i} label={stringToUppercase(field)}>
+                <Form.Item
+                  key={i}
+                  label={stringToUppercase(field)}
+                  validateStatus={errorField[field] ? "error" : ""}
+                  help={errorField[field] ? "This field is required!" : ""}
+                >
                   <Input
                     type="number"
                     onChange={(e) => handleChange(e)}
@@ -153,8 +231,16 @@ export const FormDataPages = () => {
 
             case "date":
               return (
-                <Form.Item key={i} label={stringToUppercase(field)}>
-                  <DatePicker name={field} onChange={handleDate} />
+                <Form.Item
+                  key={i}
+                  label={stringToUppercase(field)}
+                  validateStatus={errorField[field] ? "error" : ""}
+                  help={errorField[field] ? "This field is required!" : ""}
+                >
+                  <DatePicker
+                    name={field}
+                    onChange={(e, value) => handleDate(e, value, field)}
+                  />
                 </Form.Item>
               );
             default:
@@ -166,6 +252,10 @@ export const FormDataPages = () => {
           {/* button submit */}
           <Button loading={uploading} type="primary" htmlType="submit">
             Submit
+          </Button>
+
+          <Button onClick={validateField} loading={uploading} type="primary">
+            Check Validate
           </Button>
         </Form.Item>
       </Form>

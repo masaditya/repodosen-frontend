@@ -7,7 +7,7 @@ export const DashboardPages = () => {
 
   return (
     <div className="site-card-wrapper">
-      <Divider orientation="left" plain>
+      <Divider orientation="left">
         <h4 className="greeting-text-dashboard text-left">
           Welcome back, {state.username}
         </h4>

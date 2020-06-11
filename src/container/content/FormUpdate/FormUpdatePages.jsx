@@ -21,7 +21,7 @@ export const FormUpdatePages = () => {
 
   const fields = Object.keys(repo);
   fields.shift();
-  
+
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -35,14 +35,16 @@ export const FormUpdatePages = () => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
       newFileList.splice(index, 1);
-
       setFileList(newFileList);
     },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
+    beforeUpload: (file, index) => {
+      let tmp = [...fileList];
+      tmp[index] = file;
+      console.log(tmp);
+      setFileList([...tmp]);
       return false;
     },
-    fileList,
+    listType: "picture",
   };
 
   // handle input text
@@ -65,7 +67,10 @@ export const FormUpdatePages = () => {
 
     // mengisi formData dengan file
     fileList.forEach((file) => {
-      formData.append("file", file);
+      if (file) {
+        console.log(file);
+        formData.append("file", file);
+      }
     });
 
     UpdateData(repo.pathname, repo[Object.keys(repo)[1]], formData).then(
@@ -101,7 +106,11 @@ export const FormUpdatePages = () => {
             return (
               <Form.Item key={i} name={field} label={stringToUppercase(field)}>
                 <Input disabled value={inputText[field]} name={field} />
-                <FileField uploadProps={uploadProps} />
+                <FileField
+                  beforeUpload={(file) => uploadProps.beforeUpload(file, i)}
+                  onRemove={(file) => uploadProps.onRemove(file)}
+                  listType={uploadProps.listType}
+                />
               </Form.Item>
             );
           case "text":
