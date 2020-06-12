@@ -6,7 +6,6 @@ import { Switch, Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
-import { toast } from "react-toastify";
 import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
 
 export const MainContainer = () => {

@@ -4,7 +4,6 @@ import { Form, Input, Button, notification } from "antd";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChangePassword } from "../../../context/actions/actions";
-import { toast } from "react-toastify";
 
 const layout = {
   labelCol: { span: 6 },
