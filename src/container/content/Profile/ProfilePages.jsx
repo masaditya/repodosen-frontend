@@ -5,7 +5,7 @@ import {
   UpdateProfile,
   UpdatePicture,
 } from "../../../context/actions/actions";
-import { Spin, Col, Button, Input, Form, notification } from "antd";
+import { Spin, Col, Button, Input, Form, notification, Radio } from "antd";
 
 import { EditOutlined } from "@ant-design/icons";
 import { FileField } from "../FormData/FileField";
@@ -92,18 +92,22 @@ export const ProfilePages = () => {
             message: "Updated profile data ",
             description: res.message,
           });
+          setUploading(false);
+          history.goBack();
+          setTimeout(() => {
+            history.goBack();
+          }, 1000);
         } else {
           notification.error({
             message: "Updated profile data ",
             description: res.message,
           });
+          setUploading(false);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-    setUploading(false);
-    history.goBack();
   };
 
   return (
@@ -123,7 +127,6 @@ export const ProfilePages = () => {
               width="150"
               style={{ borderRadius: "50%" }}
             />
-            <p> {userData.foto} </p>
             <Form.Item
               validateStatus={errorField["foto"] ? "error" : ""}
               help={
@@ -148,7 +151,6 @@ export const ProfilePages = () => {
                       justifyContent: "space-between",
                       alignItems: "center",
                       padding: "1em 2em",
-                      boxShadow: "0px 0px 87px -43px rgba(153,153,153,1)",
                       borderRadius: ".5em",
                       border: "0.5px solid #f0f0f0",
                     }}
@@ -163,6 +165,19 @@ export const ProfilePages = () => {
                     >
                       {!editedField.includes(i) ? (
                         <b>{userData[field]}</b>
+                      ) : field.includes("kelamin") ? (
+                        <Radio.Group
+                          onChange={(e) => {
+                            setUserData({
+                              ...userData,
+                              [field]: e.target.value,
+                            });
+                          }}
+                          value={userData[field]}
+                        >
+                          <Radio value="Laki laki">Laki laki</Radio>
+                          <Radio value="Perempuan">Perempuan</Radio>
+                        </Radio.Group>
                       ) : (
                         <Input
                           name={field}
@@ -190,9 +205,11 @@ export const ProfilePages = () => {
               );
             })}
             <Button
+              style={{ marginTop: "20px" }}
               loading={uploading}
               disabled={!editedField.length > 0}
               onClick={handleSubmit}
+              type="primary"
             >
               Update Data
             </Button>

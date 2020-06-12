@@ -9,8 +9,6 @@ export const Sidenav = () => {
   const history = useHistory();
   const { state } = useContext(RootContext);
 
-  console.log(state);
-
   return (
     <Sider
       style={{

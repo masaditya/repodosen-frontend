@@ -35,7 +35,9 @@ export const ChangePasswordPages = () => {
           notification.success({
             message: res.message,
           });
-          history.goBack();
+          setTimeout(() => {
+            history.goBack();
+          }, 1000);
         } else {
           notification.error({
             message: res.message,

@@ -25,6 +25,13 @@ export const AddDosenPages = () => {
             notification.success({
               message: res.message,
             });
+            setTimeout(() => {
+              history.goBack();
+            }, 1000);
+          } else {
+            notification.error({
+              message: res.message,
+            });
           }
         })
         .catch((err) => {
