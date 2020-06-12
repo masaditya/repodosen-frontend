@@ -16,43 +16,64 @@ export const DashboardPages = () => {
       <Row gutter={16}>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Kepangkatan">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi data status jabatan fungsional dosen, pangkat, golongan,
+              dan juga angka kredit.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Pendidikan">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi data riwayat pendidikan beserta kelengkapan ijazah masing
+              masing jenjang pendidikan.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Penelitian">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi data penelitian yang pernah dilakukan oleh dosen beserta
+              kelengkapan jurnal penelitian.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Pengabdian">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi data Pengabdian dosen kepada masyarakat yang merupakan
+              salah satu kewajiban dosen dalam berkontribusi untuk negeri.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Pengajaran">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi data kegiatan mengajar yang pernah dilakukan oleh dosen di
+              JTI.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Pelatihan">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi data pelatihan yang di ikuti oleh dosen dalam rangka
+              pengembangan pengetahuan dan mempersiapkan program pembelajaran.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Sertifikasi">
-            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              berisi sertifikasi yang di ikuti dosen. Biasanya sertifikasi
+              dilaksanakan setelah pelatihan.
+            </p>
             <Button className="button-check">Check</Button>
           </Card>
         </Col>
