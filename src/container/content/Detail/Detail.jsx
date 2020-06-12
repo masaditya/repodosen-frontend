@@ -7,6 +7,23 @@ export const DetailPages = () => {
   const history = useHistory();
   const { repo } = history.location.state;
 
+  const viewRender = (field = "") => {
+    if (field.includes("file_")) {
+      let filename = repo[field].split(".").pop().toLowerCase();
+      if (filename === "pdf") {
+        return (
+          <Button onClick={() => window.open(repo[field], "_blank")}>
+            Show Files
+          </Button>
+        );
+      } else {
+        return <img width="150" src={repo[field]} alt={field} />;
+      }
+    } else {
+      return <p>{repo[field]}</p>;
+    }
+  };
+
   return (
     <div>
       <div style={{ textAlign: "left" }}>
@@ -25,14 +42,13 @@ export const DetailPages = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "1em 4em",
-                boxShadow: "0px 0px 87px -43px rgba(153,153,153,1)",
                 borderRadius: "1em",
                 border: "0.5px solid #f0f0f0",
               }}
             >
               <p>{stringToUppercase(field)}</p>
 
-              <p>{repo[field]}</p>
+              {viewRender(field)}
             </div>
           );
         })}

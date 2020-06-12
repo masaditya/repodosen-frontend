@@ -73,8 +73,11 @@ const showConfirm = (repo) => {
             message: "Deleted data from " + pathname,
             description: res.message,
           });
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 1000);
         } else {
-          notification.success({
+          notification.error({
             message: "Deleted data from " + pathname,
             description: res.message,
           });

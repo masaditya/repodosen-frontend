@@ -137,7 +137,9 @@ export const FormDataPages = () => {
             description: res.message,
           });
           setUploading(false);
-          history.goBack();
+          setTimeout(() => {
+            history.goBack();
+          }, 1000);
         } else {
           notification.error({
             message: "Added New Data to " + formControl,

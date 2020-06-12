@@ -1,12 +1,11 @@
 import React from "react";
-import { Layout, Button, Avatar, Menu, Dropdown, notification } from "antd";
+import { Layout, Button,  Menu, Dropdown, notification } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
 import { Switch, Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
-import { toast } from "react-toastify";
 import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
 
 export const MainContainer = () => {
@@ -70,7 +69,9 @@ export const MainContainer = () => {
           {/* avatar */}
 
           <Dropdown overlay={menu} trigger={["click"]}>
-            <Avatar>A</Avatar>
+            <Button type="primary" shape="circle">
+              {state.username[0].toUpperCase()}
+            </Button>
           </Dropdown>
 
           {/* button add data */}

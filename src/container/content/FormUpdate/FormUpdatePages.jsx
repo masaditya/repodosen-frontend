@@ -123,7 +123,9 @@ export const FormUpdatePages = () => {
               description: res.message,
             });
             setUploading(false);
-            history.goBack();
+            setTimeout(() => {
+              history.goBack();
+            }, 1000);
           } else {
             notification.error({
               message: "Update data to repository " + repo.pathname,

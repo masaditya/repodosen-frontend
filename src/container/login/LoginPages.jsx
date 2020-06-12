@@ -13,9 +13,11 @@ export const LoginPages = () => {
 
   const [error, setError] = useState({ username: false, password: false });
 
+  const [loading, setLoading] = useState(false);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (username === "") {
       setError({ ...error, username: true });
     } else if (password === "") {
@@ -28,6 +30,9 @@ export const LoginPages = () => {
           description: "Hello " + username + ", welcome back!",
         });
         dispatch(result);
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 500);
       } else {
         notification.error({
           message: "Login Failed!",
@@ -36,6 +41,7 @@ export const LoginPages = () => {
         });
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -60,6 +66,7 @@ export const LoginPages = () => {
               value={username}
               type="text"
               name="username"
+              disabled={loading}
             />
           </Form.Item>
 
@@ -75,31 +82,16 @@ export const LoginPages = () => {
               value={password}
               type="password"
               name="password"
+              disabled={loading}
             />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
         </Form>
-
-        {/* <form className="m-auto" onSubmit={submitHandler}>
-          <input
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-            type="text"
-            name="username"
-          />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            type="password"
-            name="password"
-          />
-          <button type="submit">Login</button>
-        </form> */}
       </div>
     </div>
   );
