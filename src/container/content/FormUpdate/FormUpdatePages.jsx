@@ -8,6 +8,7 @@ import {
 } from "../../../context/actions/actions";
 import { models } from "../../../types";
 import { FileField } from "../FormData/FileField";
+import moment from "moment";
 
 export const FormUpdatePages = () => {
   const [uploading, setUploading] = useState(false);
@@ -29,6 +30,8 @@ export const FormUpdatePages = () => {
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
+
+  const dateFormat = "YYYY-MM-DD";
 
   const uploadProps = {
     onRemove: (file, field) => {
@@ -219,6 +222,8 @@ export const FormUpdatePages = () => {
               >
                 <DatePicker
                   name={field}
+                  format={dateFormat}
+                  defaultValue={moment(inputText[field], dateFormat)}
                   onChange={(e, value) => handleDate(e, value, field)}
                 />
               </Form.Item>
