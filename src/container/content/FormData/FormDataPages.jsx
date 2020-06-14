@@ -65,7 +65,6 @@ export const FormDataPages = () => {
       let tmp = [...fileList];
       tmp[index] = file;
       const typeFile = file.name.split(".").pop().toLowerCase();
-      console.log(typeFile);
       if (
         typeFile === "jpg" ||
         typeFile === "jpeg" ||
@@ -79,7 +78,6 @@ export const FormDataPages = () => {
       }
       setErrorField({ ...errorField, ...erfield });
 
-      console.log(errorField);
       return false;
     },
     listType: "picture",
@@ -154,7 +152,6 @@ export const FormDataPages = () => {
   };
 
   const handleDate = (e, dateString, field) => {
-    console.log(e, dateString, field);
     const tmp = Object.assign(inputText, { [field]: dateString });
     setInputText(tmp);
   };

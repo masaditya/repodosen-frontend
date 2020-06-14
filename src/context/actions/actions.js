@@ -11,7 +11,6 @@ export const Login = async (username, password) => {
       passwordLogin: password,
     })
     .then((res) => {
-      console.log(res);
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         return {
@@ -29,7 +28,6 @@ export const Login = async (username, password) => {
       }
     })
     .catch((err) => {
-      console.log(err);
 
       return {
         type: LOGIN_FAILED,
@@ -46,7 +44,6 @@ export const Logout = () => {
 
 export const GetAllData = async (pathname) => {
   const url = process.env.REACT_APP_IP_SERVER + pathname;
-  console.log(url);
   const config = {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -196,7 +193,6 @@ export const UpdateProfile = async (data) => {
   };
   const response = await Axios.patch(url, data, config)
     .then((res) => {
-      console.log(res);
       if (res.status === 200) {
         return {
           success: true,
@@ -230,7 +226,6 @@ export const UpdatePicture = async (data) => {
       "Content-Type": "multipart/form-data",
     })
     .then((res) => {
-      console.log(res);
       if (res.status === 200) {
         return {
           success: true,
@@ -265,7 +260,6 @@ export const ChangePassword = async (oldPass, newPass) => {
   };
   const response = await Axios.patch(url, data, config)
     .then((res) => {
-      console.log(res.data);
       if (res.data.status) {
         return {
           success: true,
@@ -306,6 +300,33 @@ export const CreateDosen = async (data) => {
         return {
           success: false,
           message: "Added new data failed",
+        };
+      }
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
+export const DeleteDosen = async (id) => {
+  const url = process.env.REACT_APP_IP_SERVER + "/user/dosen/" + id;
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const response = await Axios.delete(url, config)
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Delete dosen successfully",
+        };
+      } else {
+        return {
+          success: false,
+          message: "Delete dosen failed",
         };
       }
     })

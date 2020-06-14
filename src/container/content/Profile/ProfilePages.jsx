@@ -31,7 +31,6 @@ export const ProfilePages = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
 
@@ -47,7 +46,6 @@ export const ProfilePages = () => {
       let erfield = {};
 
       const typeFile = file.name.split(".").pop().toLowerCase();
-      console.log(typeFile);
       if (typeFile === "jpg" || typeFile === "jpeg" || typeFile === "png") {
         erfield = Object.assign(erfield, { foto: false });
         setFileList([...fileList, file]);
@@ -106,7 +104,6 @@ export const ProfilePages = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

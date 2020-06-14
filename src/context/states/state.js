@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 
 const getPayload = (token) => {
-  console.log(process.env.REACT_APP_IP_SERVER)
   let result = false;
   if (token != null) {
     const w = jwt.verify(token, process.env.REACT_APP_JWTSECRET);

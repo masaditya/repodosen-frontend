@@ -3,7 +3,7 @@ import { Col, Card, Skeleton, notification } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import { DeteleData } from "../../context/actions/actions";
+import { DeteleData, DeleteDosen } from "../../context/actions/actions";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { RootContext } from "../../context/Context";
@@ -28,7 +28,11 @@ export const RepoItems = ({ repos = [], loading, pathname }) => {
       <DeleteOutlined
         key="delete"
         onClick={() => {
-          showConfirm(repo);
+          if (state.isAdmin) {
+            showConfirmDosen(repo);
+          } else {
+            showConfirm(repo);
+          }
         }}
       />,
     ];
@@ -67,6 +71,7 @@ const showConfirm = (repo) => {
       const firstField = Object.keys(repo)[0]; // id_pelatihan
       const pathname = firstField.split("_")[1]; // pelatihan
       const id = repo[firstField]; // id : 5
+
       DeteleData(pathname, id).then((res) => {
         if (res.success) {
           notification.success({
@@ -79,6 +84,35 @@ const showConfirm = (repo) => {
         } else {
           notification.error({
             message: "Deleted data from " + pathname,
+            description: res.message,
+          });
+        }
+      });
+    },
+    onCancel() {},
+  });
+};
+
+const showConfirmDosen = (repo) => {
+  confirm({
+    title: "Do you Want to delete these items?",
+    icon: <ExclamationCircleOutlined />,
+    onOk() {
+      const firstField = Object.keys(repo)[0]; // id_pelatihan
+      const pathname = firstField.split("_")[1]; // pelatihan
+      const id = repo[firstField]; // id : 5
+      DeleteDosen(id).then((res) => {
+        if (res.success) {
+          notification.success({
+            message: "Deleted data from ",
+            description: res.message,
+          });
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 1000);
+        } else {
+          notification.error({
+            message: "Deleted data from ",
             description: res.message,
           });
         }
