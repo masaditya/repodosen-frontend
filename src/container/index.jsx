@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Button,  Menu, Dropdown, notification } from "antd";
+import { Layout, Button, Menu, Dropdown, notification } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
 import { Switch, Link, useHistory } from "react-router-dom";
@@ -27,28 +27,27 @@ export const MainContainer = () => {
   const menu = (
     <Menu>
       {!state.isAdmin && (
-        <Menu.Item key="0">
+        <Menu.Item key="0" onClick={() => history.push("/profile")}>
           <Link to="/profile"> Profile </Link>
         </Menu.Item>
       )}
       <Menu.Divider />
-      <Menu.Item key="1">
+      <Menu.Item key="1" onClick={() => history.push("/update-password")}>
         <Link to="/update-password"> Update Password </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="2">
-        <span
-          onClick={() => {
-            dispatch(Logout());
-            notification.success({
-              message: "Logout Successfuly! ",
-              description: "See you again " + state.username,
-            });
-            history.push("/");
-          }}
-        >
-          Logout
-        </span>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          dispatch(Logout());
+          notification.success({
+            message: "Logout Successfuly! ",
+            description: "See you again " + state.username,
+          });
+          history.push("/");
+        }}
+      >
+        <span>Logout</span>
       </Menu.Item>
     </Menu>
   );

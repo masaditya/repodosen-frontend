@@ -99,7 +99,7 @@ const showConfirmDosen = (repo) => {
     icon: <ExclamationCircleOutlined />,
     onOk() {
       const firstField = Object.keys(repo)[0]; // id_pelatihan
-      const pathname = firstField.split("_")[1]; // pelatihan
+      // const pathname = firstField.split("_")[1]; // pelatihan
       const id = repo[firstField]; // id : 5
       DeleteDosen(id).then((res) => {
         if (res.success) {
