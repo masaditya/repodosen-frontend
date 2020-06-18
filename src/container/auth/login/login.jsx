@@ -3,7 +3,7 @@ import { Form, Input, Button, notification } from "antd";
 import { RootContext } from "../../../context/Context";
 import { Login } from "../../../context/actions/actions";
 import { LOGIN_SUCCESS } from "../../../context/actionTypes";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const LoginForm = () => {
   const { dispatch } = useContext(RootContext);
@@ -14,6 +14,7 @@ export const LoginForm = () => {
   const [error, setError] = useState({ username: false, password: false });
 
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -23,22 +24,25 @@ export const LoginForm = () => {
     } else if (password === "") {
       setError({ ...error, password: true });
     } else {
-      const result = await Login(username, password);
-      if (result.type === LOGIN_SUCCESS) {
-        notification.success({
-          message: "Login Successfully!",
-          description: "Hello " + username + ", welcome back!",
-        });
-        dispatch(result);
-      } else {
-        notification.error({
-          message: "Login Failed!",
-          description:
-            "Try again, make sure you remember username and your password!",
-        });
-      }
+      Login(username, password).then((result) => {
+        if (result.type === LOGIN_SUCCESS) {
+          notification.success({
+            message: "Login Successfully!",
+            description: "Hello " + username + ", welcome back!",
+          });
+          dispatch(result);
+          setLoading(false);
+          history.push("/");
+        } else {
+          notification.error({
+            message: "Login Failed!",
+            description:
+              "Try again, make sure you remember username and your password!",
+          });
+          setLoading(false);
+        }
+      });
     }
-    setLoading(false);
   };
 
   return (

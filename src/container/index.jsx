@@ -28,6 +28,9 @@ export const MainContainer = () => {
 
   useEffect(() => {
     setUsername(state.username);
+    return () => {
+      setUsername("");
+    };
   }, [state.username, state.isAuthenticated]);
 
   const menu = (

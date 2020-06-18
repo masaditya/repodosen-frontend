@@ -14,6 +14,7 @@ export const Login = async (username, password) => {
       passwordLogin: password,
     })
     .then((res) => {
+      console.log(res)
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         let username = getUsername(res.data.token)
@@ -362,6 +363,37 @@ export const Register = async (data) => {
       return {
         success: false,
         message: "Register failed",
+      };
+    });
+  return response;
+}
+
+export const Verifikasi = async (id) => {
+  const url = process.env.REACT_APP_IP_SERVER + "/user/dosen/verifikasi/" + id;
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const response = await Axios.patch(url, {}, config)
+    .then((res) => {
+      console.log(res)
+      if (res.data.status === "success") {
+        return {
+          success: true,
+          message: res.data.message
+        };
+      } else {
+        return {
+          success: false,
+          message: res.data.message,
+        };
+      }
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        message: "Verify failed",
       };
     });
   return response;

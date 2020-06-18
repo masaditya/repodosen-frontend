@@ -1,18 +1,20 @@
-import React, { useContext } from "react";
-import { Col, Card, Skeleton, notification } from "antd";
+import React from "react";
+import { Col, Card, Skeleton, notification, Avatar } from "antd";
 import Meta from "antd/lib/card/Meta";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EyeOutlined,
+  CheckOutlined,
+  CloseOutlined,
+} from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import { DeteleData } from "../../context/actions/actions";
+import { DeleteDosen } from "../../context/actions/actions";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { RootContext } from "../../context/Context";
 
 const { confirm } = Modal;
 
-export const RepoItems = ({ repos = [], loading, pathname }) => {
-  const { state } = useContext(RootContext);
-
+export const RepoItemsAdmin = ({ repos = [], loading, pathname = "" }) => {
   const history = useHistory();
 
   let actionsButton = (repo) => {
@@ -21,19 +23,15 @@ export const RepoItems = ({ repos = [], loading, pathname }) => {
         key="detail"
         onClick={() => history.push("/detail", { repo })}
       />,
-      <EditOutlined
-        key="update"
-        onClick={() => history.push("/update", { pathname, ...repo })}
-      />,
       <DeleteOutlined
         key="delete"
         onClick={() => {
-          showConfirm(repo);
+          showConfirmDosen(repo);
         }}
       />,
     ];
 
-    if (state.isAdmin) {
+    if (!pathname.includes("user")) {
       buttons.splice(1, 1);
     }
     return buttons;
@@ -49,6 +47,23 @@ export const RepoItems = ({ repos = [], loading, pathname }) => {
                 <Meta
                   title={repo[Object.keys(repo)[2]]}
                   description={repo[Object.keys(repo)[3]]}
+                  avatar={
+                    pathname.includes("user") ? (
+                      repo.isVerified ? (
+                        <Avatar
+                          style={{ backgroundColor: "#87d068" }}
+                          icon={<CheckOutlined />}
+                        />
+                      ) : (
+                        <Avatar
+                          style={{ backgroundColor: "#e74c3c" }}
+                          icon={<CloseOutlined />}
+                        />
+                      )
+                    ) : (
+                      ""
+                    )
+                  }
                 />
               </Skeleton>
             </Card>
@@ -59,19 +74,17 @@ export const RepoItems = ({ repos = [], loading, pathname }) => {
   );
 };
 
-const showConfirm = (repo) => {
+const showConfirmDosen = (repo) => {
   confirm({
     title: "Do you Want to delete these items?",
     icon: <ExclamationCircleOutlined />,
     onOk() {
       const firstField = Object.keys(repo)[0]; // id_pelatihan
-      const pathname = firstField.split("_")[1]; // pelatihan
       const id = repo[firstField]; // id : 5
-
-      DeteleData(pathname, id).then((res) => {
+      DeleteDosen(id).then((res) => {
         if (res.success) {
           notification.success({
-            message: "Deleted data from " + pathname,
+            message: "Deleted data from ",
             description: res.message,
           });
           setTimeout(() => {
@@ -79,7 +92,7 @@ const showConfirm = (repo) => {
           }, 1000);
         } else {
           notification.error({
-            message: "Deleted data from " + pathname,
+            message: "Deleted data from ",
             description: res.message,
           });
         }

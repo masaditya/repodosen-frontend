@@ -6,6 +6,7 @@ import {
 } from "../../../context/actions/actions";
 import { RepoItems } from "../../../components/RepoItems/RepoItems";
 import { RootContext } from "../../../context/Context";
+import { RepoItemsAdmin } from "../../../components/RepoItems/RepoItemsAdmin";
 
 export const MainPages = (props) => {
   const { state } = useContext(RootContext);
@@ -23,6 +24,10 @@ export const MainPages = (props) => {
         setRepos([]);
         setLoading(false);
       });
+    return () => {
+      setRepos([]);
+      setLoading(false);
+    };
   }, [props.location.pathname, state.username]);
   return (
     <div>
@@ -33,11 +38,19 @@ export const MainPages = (props) => {
       </Divider>
       <Row gutter={[16, 16]}>
         {repos.length > 0 ? (
-          <RepoItems
-            repos={repos}
-            loading={loading}
-            pathname={props.location.pathname}
-          />
+          !state.isAdmin ? (
+            <RepoItems
+              repos={repos}
+              loading={loading}
+              pathname={props.location.pathname}
+            />
+          ) : (
+            <RepoItemsAdmin
+              repos={repos}
+              loading={loading}
+              pathname={props.location.pathname}
+            />
+          )
         ) : (
           <img
             style={{ minWidth: "400px", width: "30%" }}
