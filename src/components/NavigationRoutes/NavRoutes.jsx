@@ -10,6 +10,8 @@ import { ChangePasswordPages } from "../../container/content/ChangePassword/Chan
 import { AddDosenPages } from "../../container/content/AddDosen/AddDosenPages";
 
 export const NavRoutes = () => {
+  
+
   return (
     <>
       <Route exact path="/" component={DashboardPages} />

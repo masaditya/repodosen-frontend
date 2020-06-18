@@ -8,7 +8,7 @@ export const DetailPages = () => {
   const { repo } = history.location.state;
 
   const viewRender = (field = "") => {
-    if (field.includes("file_")) {
+    if (field.includes("file_") || field.includes("foto")) {
       let filename = repo[field].split(".").pop().toLowerCase();
       if (filename === "pdf") {
         return (

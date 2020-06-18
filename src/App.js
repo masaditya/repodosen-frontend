@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import { RootContext } from "./context/Context";
 import { LoginPages } from "./container/login/LoginPages";
@@ -8,11 +8,17 @@ import { ToastContainer } from "react-toastify";
 export const App = () => {
   const { state } = useContext(RootContext);
 
-  let main = <LoginPages />;
+  const [main, setMain] = useState(<LoginPages />);
 
-  if (state.isAuthenticated) {
-    main = <MainContainer />;
-  }
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      setMain(<MainContainer />);
+    }
+    return () => {
+      setMain(<LoginPages />);
+    };
+  }, [state.isAuthenticated, state.isAdmin]);
+
   return (
     <>
       {main}

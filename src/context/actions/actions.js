@@ -4,6 +4,7 @@ import {
   LOGIN_FAILED,
   LOGOUT_START
 } from "../actionTypes";
+import { getUsername } from "../states/state";
 
 export const Login = async (username, password) => {
   const response = await Axios.post(process.env.REACT_APP_IP_SERVER + "/login", {
@@ -13,11 +14,13 @@ export const Login = async (username, password) => {
     .then((res) => {
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
+        let username = getUsername(res.data.token)
         return {
           type: LOGIN_SUCCESS,
           payload: {
             isAdmin: res.data.role === "admin",
             token: res.data.token,
+            username : username
           },
         };
       } else {

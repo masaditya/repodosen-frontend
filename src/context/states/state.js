@@ -9,7 +9,7 @@ const getPayload = (token) => {
   return result;
 };
 
-const getUsername = (token) => {
+export const getUsername = (token) => {
   let result = "";
   if (token != null) {
     const w = jwt.verify(token, process.env.REACT_APP_JWTSECRET);

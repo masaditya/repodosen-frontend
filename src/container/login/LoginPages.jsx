@@ -30,9 +30,6 @@ export const LoginPages = () => {
           description: "Hello " + username + ", welcome back!",
         });
         dispatch(result);
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 500);
       } else {
         notification.error({
           message: "Login Failed!",

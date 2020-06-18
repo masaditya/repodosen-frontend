@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sider from "antd/lib/layout/Sider";
 import { Menu, Icon } from "antd";
 import { useHistory, Link } from "react-router-dom";
@@ -8,6 +8,14 @@ import { RootContext } from "../../context/Context";
 export const Sidenav = () => {
   const history = useHistory();
   const { state } = useContext(RootContext);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    setIsAdmin(state.isAdmin);
+    return () => {
+      setIsAdmin(false);
+    };
+  }, [state.isAdmin]);
 
   return (
     <Sider
@@ -31,7 +39,7 @@ export const Sidenav = () => {
       </div>
 
       <Menu theme="dark" mode="inline">
-        {state.isAdmin && (
+        {isAdmin && (
           <Menu.Item key="0" onClick={() => history.push("/user/dosen")}>
             <Icon type="usergroup-add" />
             <span className="nav-text">Dosen</span>

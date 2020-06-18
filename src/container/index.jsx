@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout, Button, Menu, Dropdown, notification } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
@@ -7,10 +7,12 @@ import { useContext } from "react";
 import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
 import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
+import { useState } from "react";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
   const { state, dispatch } = useContext(RootContext);
+  const [username, setUsername] = useState(state.username);
 
   const history = useHistory();
 
@@ -23,6 +25,10 @@ export const MainContainer = () => {
       pathname.toString() === "/update-password";
     return tmp;
   };
+
+  useEffect(() => {
+    setUsername(state.username);
+  }, [state.username, state.isAuthenticated]);
 
   const menu = (
     <Menu>
@@ -69,7 +75,7 @@ export const MainContainer = () => {
 
           <Dropdown overlay={menu} trigger={["click"]}>
             <Button type="primary" shape="circle">
-              {state.username[0].toUpperCase()}
+              {username[0].toUpperCase()}
             </Button>
           </Dropdown>
 
