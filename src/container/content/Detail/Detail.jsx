@@ -6,6 +6,7 @@ import {
   Verifikasi,
 } from "../../../context/actions/actions";
 import { useState } from "react";
+import { DashboardPages } from "../Dashboard/DashboardPages";
 
 export const DetailPages = () => {
   const history = useHistory();
@@ -92,6 +93,15 @@ export const DetailPages = () => {
             </div>
           );
         })}
+
+      {Object.prototype.hasOwnProperty.call(repo, "isVerified") && (
+        <DashboardPages
+          noGreeting
+          withDosen
+          dosen={repo}
+          urlDosen="/user/dosen"
+        />
+      )}
     </div>
   );
 };

@@ -73,7 +73,7 @@ export const RegisterForm = () => {
   return (
     <Form
       onSubmit={handleSubmit}
-      style={{ textAlign: "left" }}
+      style={{ textAlign: "left", paddingTop: "20px", paddingBottom: "30px" }}
       className="m-auto"
     >
       <h1 className="greeting-text">Register to getting started!</h1>

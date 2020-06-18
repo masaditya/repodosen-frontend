@@ -48,7 +48,7 @@ export const RepoItemsAdmin = ({ repos = [], loading, pathname = "" }) => {
                   title={repo[Object.keys(repo)[2]]}
                   description={repo[Object.keys(repo)[3]]}
                   avatar={
-                    pathname.includes("user") ? (
+                    pathname.includes("dosen") ? (
                       repo.isVerified ? (
                         <Avatar
                           style={{ backgroundColor: "#87d068" }}

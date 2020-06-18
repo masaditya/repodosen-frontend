@@ -59,6 +59,7 @@ export const MainPages = (props) => {
           />
         )}
       </Row>
+      
     </div>
   );
 };
