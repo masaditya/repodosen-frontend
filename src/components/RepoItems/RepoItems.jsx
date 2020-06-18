@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Col, Card, Skeleton, notification } from "antd";
+import { Col, Card, Skeleton, notification,  Button } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
@@ -53,6 +53,13 @@ export const RepoItems = ({ repos = [], loading, pathname }) => {
                 <Meta
                   title={repo[Object.keys(repo)[2]]}
                   description={repo[Object.keys(repo)[3]]}
+                  avatar={
+                    repo.isVerified ? (
+                      <Button type="primary" shape="circle"></Button>
+                    ) : (
+                      <Button type="danger" shape="circle"></Button>
+                    )
+                  }
                 />
               </Skeleton>
             </Card>

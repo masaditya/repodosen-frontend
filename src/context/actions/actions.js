@@ -4,7 +4,9 @@ import {
   LOGIN_FAILED,
   LOGOUT_START
 } from "../actionTypes";
-import { getUsername } from "../states/state";
+import {
+  getUsername
+} from "../states/state";
 
 export const Login = async (username, password) => {
   const response = await Axios.post(process.env.REACT_APP_IP_SERVER + "/login", {
@@ -20,7 +22,7 @@ export const Login = async (username, password) => {
           payload: {
             isAdmin: res.data.role === "admin",
             token: res.data.token,
-            username : username
+            username: username
           },
         };
       } else {
@@ -338,6 +340,32 @@ export const DeleteDosen = async (id) => {
     });
   return response;
 };
+
+export const Register = async (data) => {
+  const url = process.env.REACT_APP_IP_SERVER + "/register";
+
+  const response = await Axios.post(url, data)
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          message: "Register successfully",
+        };
+      } else {
+        return {
+          success: false,
+          message: "Register failed",
+        };
+      }
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        message: "Register failed",
+      };
+    });
+  return response;
+}
 
 
 export const stringToUppercase = (str) => {

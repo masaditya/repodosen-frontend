@@ -64,8 +64,9 @@ export const models = {
         nidn: 'text',
         nama: 'text',
         email: 'text',
-        jenis_kelamin: 'text',
+        jenis_kelamin: 'radio',
         alamat: 'text',
-        username: 'text'
+        username: 'text',
+        password: 'password'
     }
 }
