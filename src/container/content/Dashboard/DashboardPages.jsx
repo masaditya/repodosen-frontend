@@ -3,7 +3,11 @@ import { Card, Row, Col, Button, Divider } from "antd";
 import { RootContext } from "../../../context/Context";
 import { useHistory } from "react-router-dom";
 
-export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
+export const DashboardPages = ({
+  noGreeting,
+  id_dosen = "",
+  urlDosen = "",
+}) => {
   const { state } = useContext(RootContext);
   const history = useHistory();
 
@@ -29,7 +33,7 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
 
             <Button
               onClick={() => {
-                history.push(urlDosen + "/kepangkatan/" + dosen.id_dosen);
+                history.push(urlDosen + "/kepangkatan/" + id_dosen);
               }}
               className="button-check"
             >
@@ -45,9 +49,7 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
             </p>
 
             <Button
-              onClick={() =>
-                history.push(urlDosen + "/pendidikan/" + dosen.id_dosen)
-              }
+              onClick={() => history.push(urlDosen + "/pendidikan/" + id_dosen)}
               className="button-check"
             >
               Check
@@ -62,9 +64,7 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
             </p>
 
             <Button
-              onClick={() =>
-                history.push(urlDosen + "/penelitian/" + dosen.id_dosen)
-              }
+              onClick={() => history.push(urlDosen + "/penelitian/" + id_dosen)}
               className="button-check"
             >
               Check
@@ -79,9 +79,7 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
             </p>
 
             <Button
-              onClick={() =>
-                history.push(urlDosen + "/pengabdian/" + dosen.id_dosen)
-              }
+              onClick={() => history.push(urlDosen + "/pengabdian/" + id_dosen)}
               className="button-check"
             >
               Check
@@ -96,9 +94,7 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
             </p>
 
             <Button
-              onClick={() =>
-                history.push(urlDosen + "/pengajaran/" + dosen.id_dosen)
-              }
+              onClick={() => history.push(urlDosen + "/pengajaran/" + id_dosen)}
               className="button-check"
             >
               Check
@@ -113,9 +109,7 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
             </p>
 
             <Button
-              onClick={() =>
-                history.push(urlDosen + "/pelatihan/" + dosen.id_dosen)
-              }
+              onClick={() => history.push(urlDosen + "/pelatihan/" + id_dosen)}
               className="button-check"
             >
               Check
@@ -125,13 +119,13 @@ export const DashboardPages = ({ noGreeting, dosen, urlDosen = "" }) => {
         <Col span={8}>
           <Card className="card-dashboard text-left" title="Sertifikasi">
             <p>
-              berisi sertifikasi yang di ikuti dosen. Biasanya sertifikasi
-              dilaksanakan setelah pelatihan.
+              berisi sertifikasi yang di ikuti Biasanya sertifikasi dilaksanakan
+              setelah pelatihan.
             </p>
 
             <Button
               onClick={() =>
-                history.push(urlDosen + "/sertifikasi/" + dosen.id_dosen)
+                history.push(urlDosen + "/sertifikasi/" + id_dosen)
               }
               className="button-check"
             >
