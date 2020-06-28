@@ -30,8 +30,7 @@ export const ProfilePages = () => {
           setLoading(false);
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, []);
 
   // upload profile picture props
@@ -91,9 +90,8 @@ export const ProfilePages = () => {
             description: res.message,
           });
           setUploading(false);
-          history.goBack();
           setTimeout(() => {
-            history.goBack();
+            history.push("/");
           }, 1000);
         } else {
           notification.error({
@@ -103,8 +101,7 @@ export const ProfilePages = () => {
           setUploading(false);
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -122,7 +119,8 @@ export const ProfilePages = () => {
               }
               alt="photos"
               width="150"
-              style={{ borderRadius: "50%" }}
+              height="150"
+              style={{ borderRadius: "50%", objectFit: "cover" }}
             />
             <Form.Item
               validateStatus={errorField["foto"] ? "error" : ""}

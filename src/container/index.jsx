@@ -8,6 +8,7 @@ import { RootContext } from "../context/Context";
 import { Logout } from "../context/actions/actions";
 import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
 import { useState } from "react";
+import { BellOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 export const MainContainer = () => {
   const { Header, Content } = Layout;
@@ -61,6 +62,58 @@ export const MainContainer = () => {
     </Menu>
   );
 
+  const notif = (
+    <Menu
+      style={{
+        minWidth: "300px",
+        maxWidth: "350px",
+        maxHeight: "350px",
+        overflowY: "auto",
+      }}
+    >
+      <Menu.Item>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <InfoCircleOutlined size={30} style={{ marginRight: "10px" }} />
+          <p
+            style={{
+              wordWrap: "break-word",
+              whiteSpace: "pre-line",
+              wordBreak: "break-word",
+            }}
+          >
+            Ini notifikasi ya .
+          </p>
+        </div>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <InfoCircleOutlined size={30} style={{ marginRight: "10px" }} />
+          <p
+            style={{
+              wordWrap: "break-word",
+              whiteSpace: "pre-line",
+              wordBreak: "break-word",
+            }}
+          >
+            Ini notifikasi lagi aja deh.
+          </p>
+        </div>
+      </Menu.Item>
+      <Menu.Divider />
+    </Menu>
+  );
+
   return (
     <Layout>
       <Sidenav />
@@ -72,6 +125,7 @@ export const MainContainer = () => {
             display: "flex",
             justifyContent: "space-between",
             flexDirection: "row-reverse",
+            alignItems: "center",
           }}
         >
           {/* avatar */}
@@ -80,6 +134,11 @@ export const MainContainer = () => {
             <Button type="primary" shape="circle">
               {username[0].toUpperCase()}
             </Button>
+          </Dropdown>
+
+          {/* notify */}
+          <Dropdown overlay={notif} trigger={["click"]}>
+            <BellOutlined />
           </Dropdown>
 
           {/* button add data */}

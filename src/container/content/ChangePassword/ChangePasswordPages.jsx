@@ -17,7 +17,7 @@ export const ChangePasswordPages = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confimPassword, setConfimPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const history = useHistory();
@@ -27,6 +27,7 @@ export const ChangePasswordPages = () => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     if (validator()) {
       setError(false);
@@ -35,17 +36,20 @@ export const ChangePasswordPages = () => {
           notification.success({
             message: res.message,
           });
+          setLoading(false);
           setTimeout(() => {
-            history.goBack();
+            history.push("/");
           }, 1000);
         } else {
           notification.error({
             message: res.message,
           });
+          setLoading(false);
         }
       });
     } else {
       setError(true);
+      setLoading(false);
     }
   };
   return (
@@ -60,6 +64,7 @@ export const ChangePasswordPages = () => {
         <Input.Password
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
+          disabled={loading}
         />
       </Form.Item>
       <Form.Item
@@ -72,6 +77,7 @@ export const ChangePasswordPages = () => {
         <Input.Password
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
+          disabled={loading}
         />
       </Form.Item>
       <Form.Item
@@ -84,10 +90,16 @@ export const ChangePasswordPages = () => {
         <Input.Password
           value={confimPassword}
           onChange={(e) => setConfimPassword(e.target.value)}
+          disabled={loading}
         />
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button
+          loading={loading}
+          disabled={loading}
+          type="primary"
+          htmlType="submit"
+        >
           Change Password
         </Button>
       </Form.Item>
