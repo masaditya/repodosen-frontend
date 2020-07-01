@@ -399,6 +399,35 @@ export const Verifikasi = async (id) => {
   return response;
 }
 
+export const GetAllDosen = async () => {
+  const url = process.env.REACT_APP_IP_SERVER + "/user/dosen/";
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const response = await Axios.get(url, config)
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          data: res.data,
+        };
+      } else {
+        return {
+          success: false,
+          data: {},
+        };
+      }
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        data: {},
+      };
+    });
+  return response;
+}
 
 export const stringToUppercase = (str) => {
   const log = str.split("_").map((word) => {

@@ -90,26 +90,7 @@ export const MainContainer = () => {
           </p>
         </div>
       </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <InfoCircleOutlined size={30} style={{ marginRight: "10px" }} />
-          <p
-            style={{
-              wordWrap: "break-word",
-              whiteSpace: "pre-line",
-              wordBreak: "break-word",
-            }}
-          >
-            Ini notifikasi lagi aja deh.
-          </p>
-        </div>
-      </Menu.Item>
+
       <Menu.Divider />
     </Menu>
   );
@@ -137,9 +118,11 @@ export const MainContainer = () => {
           </Dropdown>
 
           {/* notify */}
-          <Dropdown overlay={notif} trigger={["click"]}>
-            <BellOutlined />
-          </Dropdown>
+          {state.isAdmin && (
+            <Dropdown overlay={notif} trigger={["click"]}>
+              <BellOutlined />
+            </Dropdown>
+          )}
 
           {/* button add data */}
 

@@ -22,5 +22,6 @@ export const initialState = {
   isAuthenticated: localStorage.getItem("token") !== null,
   isAdmin: getPayload(localStorage.getItem("token")),
   token: localStorage.getItem("token"),
-  username: getUsername(localStorage.getItem("token"))
+  username: getUsername(localStorage.getItem("token")),
+  dosen: []
 };

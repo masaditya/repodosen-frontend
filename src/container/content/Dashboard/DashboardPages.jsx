@@ -23,13 +23,15 @@ export const DashboardPages = ({
         </Divider>
       )}
 
-      <Alert
-        banner={true}
-        message="Informational Notes"
-        description="Additional description and information about copywriting."
-        type="info"
-        showIcon
-      />
+      {!history.location.pathname.includes("detail") && (
+        <Alert
+          banner={true}
+          message="Informational Notes"
+          description="Additional description and information about copywriting."
+          type="info"
+          showIcon
+        />
+      )}
 
       <Row gutter={16}>
         <Col span={8}>

@@ -25,7 +25,13 @@ export const reducer = (state = initialState, action) => {
           token: null,
           isAdmin: false
       };
-    default:
-      return state;
+
+    case "SET_DOSEN":
+      return {
+        ...state,
+        dosen: action.payload.data
+      }
+      default:
+        return state;
   }
 };
