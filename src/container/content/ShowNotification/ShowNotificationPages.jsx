@@ -3,6 +3,7 @@ import { Button, Spin } from "antd";
 import {
   stringToUppercase,
   GetOneNotification,
+  UpdateReadNotification,
 } from "../../../context/actions/actions";
 import { useHistory } from "react-router-dom";
 
@@ -14,11 +15,16 @@ export const ShowNotificationPages = () => {
 
   useEffect(() => {
     setLoading(true);
-    GetOneNotification(tmp.id_notifikasi).then((res) => {
-      console.log(res);
-      setRepo(res.data);
-      setLoading(false);
-    });
+    GetOneNotification(tmp.id_notifikasi)
+      .then((res) => {
+        setRepo(res.data);
+      })
+      .then((res) => {
+        UpdateReadNotification(tmp.id_notifikasi).then((res) => {
+          console.log(res);
+          setLoading(false);
+        });
+      });
   }, [history, tmp]);
 
   const viewRender = (field = "") => {
