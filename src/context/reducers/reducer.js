@@ -29,7 +29,7 @@ export const reducer = (state = initialState, action) => {
     case "SET_DOSEN":
       return {
         ...state,
-        dosen: action.payload.data
+        dosen: action.payload.dosen
       }
       default:
         return state;

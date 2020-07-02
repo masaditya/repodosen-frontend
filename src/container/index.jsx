@@ -38,7 +38,9 @@ export const MainContainer = () => {
         if (res.success) {
           dispatch({
             type: "SET_DOSEN",
-            payload: res.data,
+            payload: {
+              dosen : res.data
+            },
           });
         }
       });
@@ -49,7 +51,7 @@ export const MainContainer = () => {
     return () => {
       setUsername("");
     };
-  }, [state.username, state.isAuthenticated, state.isAdmin, dispatch, notif]);
+  }, [state.username, state.isAuthenticated, state.isAdmin, dispatch]);
 
   const menu = (
     <Menu>
@@ -164,11 +166,7 @@ export const MainContainer = () => {
           {!showAddButton() && (
             <Button
               onClick={() => {
-                if (state.isAdmin) {
-                  history.push("/add-dosen");
-                } else {
-                  history.push("/add", prevRoute);
-                }
+                history.push("/add", prevRoute);
               }}
             >
               Add Data

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Select,
   Form,
@@ -15,8 +15,10 @@ import {
   stringToUppercase,
 } from "../../../context/actions/actions";
 import { useHistory } from "react-router-dom";
+import { RootContext } from "../../../context/Context";
 
 export const FormDataPages = () => {
+  const { state } = useContext(RootContext);
   const history = useHistory();
 
   const prevRoute = history.location.state;
@@ -26,17 +28,25 @@ export const FormDataPages = () => {
     prevRoute === "" ? "kepangkatan" : prevRoute
   );
 
+  // is admin
+  const [dosens, setDosens] = useState([]);
+
   const [uploading, setUploading] = useState(false);
   const [inputText, setInputText] = useState({});
   const [fileList, setFileList] = useState([]);
+
   const { Option } = Select;
 
   const [errorField, setErrorField] = useState({});
 
   useEffect(() => {
+    console.log(state.dosen);
+    let tmp = state.dosen.filter((d) => d.isVerified);
+    console.log(tmp);
+    setDosens(tmp);
     setInputText({});
     setFileList([]);
-  }, [formControl]);
+  }, [formControl, state.dosen]);
 
   // Layout
   const layout = {
@@ -86,6 +96,12 @@ export const FormDataPages = () => {
   // handle input text
   const handleChange = (e) => {
     const tmp = Object.assign(inputText, { [e.target.name]: e.target.value });
+    setInputText(tmp);
+  };
+
+  //
+  const handleSelect = (e) => {
+    const tmp = Object.assign(inputText, { id_dosen: e });
     setInputText(tmp);
   };
 
@@ -181,6 +197,22 @@ export const FormDataPages = () => {
             <Option value="sertifikasi">Sertifikasi</Option>
           </Select>
         </Form.Item>
+
+        { state.isAdmin && <Form.Item label="Dosen">
+          <Select
+            style={{ width: 150 }}
+            defaultValue={
+              dosens.length > 0 && (
+                <Option value={dosens[0].id_dosen}>{dosens[0].nama}</Option>
+              )
+            }
+            onChange={(e) => handleSelect(e)}
+          >
+            {dosens.map((dosen) => {
+              return <Option value={dosen.id_dosen}>{dosen.nama}</Option>;
+            })}
+          </Select>
+        </Form.Item>}
 
         <Divider></Divider>
 
