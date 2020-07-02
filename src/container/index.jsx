@@ -49,7 +49,7 @@ export const MainContainer = () => {
     return () => {
       setUsername("");
     };
-  }, [state.username, state.isAuthenticated, state.isAdmin, dispatch]);
+  }, [state.username, state.isAuthenticated, state.isAdmin, dispatch, notif]);
 
   const menu = (
     <Menu>
@@ -147,9 +147,16 @@ export const MainContainer = () => {
 
           {/* notify */}
           {state.isAdmin && (
-            <Dropdown overlay={notify} trigger={["click"]}>
-              <BellOutlined />
-            </Dropdown>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <p style={{ marginRight: "20px" }}>
+                Unread Notification (
+                {notif.filter((item) => item.isRead === 0).length})
+              </p>
+
+              <Dropdown overlay={notify} trigger={["click"]}>
+                <BellOutlined />
+              </Dropdown>
+            </div>
           )}
 
           {/* button add data */}
