@@ -8,10 +8,9 @@ import { ProfilePages } from "../../container/content/Profile/ProfilePages";
 import { DashboardPages } from "../../container/content/Dashboard/DashboardPages";
 import { ChangePasswordPages } from "../../container/content/ChangePassword/ChangePasswordPages";
 import { AddDosenPages } from "../../container/content/AddDosen/AddDosenPages";
+import { ShowNotificationPages } from "../../container/content/ShowNotification/ShowNotificationPages";
 
 export const NavRoutes = () => {
-  
-
   return (
     <>
       <Route exact path="/" component={DashboardPages} />
@@ -28,6 +27,7 @@ export const NavRoutes = () => {
       <Route path="/sertifikasi" render={(props) => <MainPages {...props} />} />
       {/* read */}
       <Route path="/detail" component={DetailPages} />
+      <Route path="/notifikasi" component={ShowNotificationPages} />
       {/* form */}
       <Route path="/add" component={FormDataPages} />
       <Route path="/add-dosen" component={AddDosenPages} />

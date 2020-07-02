@@ -3,7 +3,6 @@ import { Divider, Button } from "antd";
 import {
   GetAllData,
   stringToUppercase,
-  GetAllDosen,
 } from "../../../context/actions/actions";
 import { RootContext } from "../../../context/Context";
 import { TableListPages } from "../TableList/TableListPages";
@@ -24,18 +23,6 @@ export const MainPages = (props) => {
         setRepos([]);
         setLoading(false);
       });
-
-    if (state.isAdmin) {
-      GetAllDosen().then((res) => {
-        console.log(res);
-        if (res.success) {
-          dispatch({
-            type: "SET_DOSEN",
-            payload: res.data,
-          });
-        }
-      });
-    }
 
     return () => {
       setRepos([]);
@@ -58,36 +45,19 @@ export const MainPages = (props) => {
         </div>
       )}
 
-      <TableListPages
-        
-        loading={loading}
-        repos={repos}
-        pathname={props.location.pathname}
-      />
-
-      {/* <Row gutter={[16, 16]}>
-        {repos.length > 0 ? (
-          !state.isAdmin ? (
-            <RepoItems
-              repos={repos}
-              loading={loading}
-              pathname={props.location.pathname}
-            />
-          ) : (
-            <RepoItemsAdmin
-              repos={repos}
-              loading={loading}
-              pathname={props.location.pathname}
-            />
-          )
-        ) : (
-          <img
-            style={{ minWidth: "400px", width: "30%" }}
-            alt="empty"
-            src={require("../../../assets/undraw_empty.png")}
-          />
-        )}
-      </Row> */}
+      {repos.length > 0 ? (
+        <TableListPages
+          loading={loading}
+          repos={repos}
+          pathname={props.location.pathname}
+        />
+      ) : (
+        <img
+          style={{ minWidth: "400px", width: "30%" }}
+          alt="empty"
+          src={require("../../../assets/undraw_empty.png")}
+        />
+      )}
     </div>
   );
 };

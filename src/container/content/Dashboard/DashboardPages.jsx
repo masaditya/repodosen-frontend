@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Card, Row, Col, Button, Divider, Alert } from "antd";
+import { Card, Row, Col, Button, Divider } from "antd";
 import { RootContext } from "../../../context/Context";
 import { useHistory } from "react-router-dom";
 
@@ -21,16 +21,6 @@ export const DashboardPages = ({
             Welcome back, {state.username}
           </h4>
         </Divider>
-      )}
-
-      {!history.location.pathname.includes("detail") && (
-        <Alert
-          banner={true}
-          message="Informational Notes"
-          description="Additional description and information about copywriting."
-          type="info"
-          showIcon
-        />
       )}
 
       <Row gutter={16}>

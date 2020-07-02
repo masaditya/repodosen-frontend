@@ -9,21 +9,22 @@ import {
 } from "../states/state";
 
 export const Login = async (username, password) => {
-  const response = await Axios.post(process.env.REACT_APP_IP_SERVER + "/login", {
-      usernameLogin: username,
-      passwordLogin: password,
-    })
+  const response = await Axios.post(
+      process.env.REACT_APP_IP_SERVER + "/login", {
+        usernameLogin: username,
+        passwordLogin: password,
+      }
+    )
     .then((res) => {
-      console.log(res)
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
-        let username = getUsername(res.data.token)
+        let username = getUsername(res.data.token);
         return {
           type: LOGIN_SUCCESS,
           payload: {
             isAdmin: res.data.role === "admin",
             token: res.data.token,
-            username: username
+            username: username,
           },
         };
       } else {
@@ -34,7 +35,6 @@ export const Login = async (username, password) => {
       }
     })
     .catch((err) => {
-
       return {
         type: LOGIN_FAILED,
       };
@@ -287,7 +287,7 @@ export const ChangePassword = async (oldPass, newPass) => {
   return response;
 };
 
-// admin only 
+// admin only
 export const CreateDosen = async (data) => {
   const url = process.env.REACT_APP_IP_SERVER + "/user/dosen";
   const config = {
@@ -366,7 +366,7 @@ export const Register = async (data) => {
       };
     });
   return response;
-}
+};
 
 export const Verifikasi = async (id) => {
   const url = process.env.REACT_APP_IP_SERVER + "/user/dosen/verifikasi/" + id;
@@ -377,11 +377,10 @@ export const Verifikasi = async (id) => {
   };
   const response = await Axios.patch(url, {}, config)
     .then((res) => {
-      console.log(res)
       if (res.data.status === "success") {
         return {
           success: true,
-          message: res.data.message
+          message: res.data.message,
         };
       } else {
         return {
@@ -397,7 +396,7 @@ export const Verifikasi = async (id) => {
       };
     });
   return response;
-}
+};
 
 export const GetAllDosen = async () => {
   const url = process.env.REACT_APP_IP_SERVER + "/user/dosen/";
@@ -427,7 +426,68 @@ export const GetAllDosen = async () => {
       };
     });
   return response;
-}
+};
+
+export const GetAllNotification = async () => {
+  const url = process.env.REACT_APP_IP_SERVER + "/notifikasi/all";
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const response = await Axios.get(url, config)
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          data: res.data,
+        };
+      } else {
+        return {
+          success: false,
+          data: {},
+        };
+      }
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        data: {},
+      };
+    });
+  return response;
+};
+
+
+export const GetOneNotification = async (id) => {
+  const url = process.env.REACT_APP_IP_SERVER + "/notifikasi/show/" + id;
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+  const response = await Axios.get(url, config)
+    .then((res) => {
+      if (res.status === 200) {
+        return {
+          success: true,
+          data: res.data,
+        };
+      } else {
+        return {
+          success: false,
+          data: {},
+        };
+      }
+    })
+    .catch((err) => {
+      return {
+        success: false,
+        data: {},
+      };
+    });
+  return response;
+};
 
 export const stringToUppercase = (str) => {
   const log = str.split("_").map((word) => {

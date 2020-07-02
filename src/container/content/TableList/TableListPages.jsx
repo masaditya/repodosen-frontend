@@ -76,7 +76,6 @@ export const TableListPages = ({ repos, loading, pathname }) => {
   return (
     <Table
       rowKey={(record, index) => {
-        console.log(index);
         return index + 1;
       }}
       loading={loading}

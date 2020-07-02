@@ -5,7 +5,11 @@ import { BottomFooter } from "../components/BottomFooter/BottomFooter";
 import { Switch, Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { RootContext } from "../context/Context";
-import { Logout } from "../context/actions/actions";
+import {
+  Logout,
+  GetAllDosen,
+  GetAllNotification,
+} from "../context/actions/actions";
 import { NavRoutes } from "../components/NavigationRoutes/NavRoutes";
 import { useState } from "react";
 import { BellOutlined, InfoCircleOutlined } from "@ant-design/icons";
@@ -14,7 +18,7 @@ export const MainContainer = () => {
   const { Header, Content } = Layout;
   const { state, dispatch } = useContext(RootContext);
   const [username, setUsername] = useState(state.username);
-
+  const [notif, setNotif] = useState([]);
   const history = useHistory();
 
   let { pathname } = history.location;
@@ -29,10 +33,25 @@ export const MainContainer = () => {
 
   useEffect(() => {
     setUsername(state.username);
+    if (state.isAdmin) {
+      GetAllDosen().then((res) => {
+        if (res.success) {
+          dispatch({
+            type: "SET_DOSEN",
+            payload: res.data,
+          });
+        }
+      });
+      console.log("MASOK");
+      GetAllNotification().then((res) => {
+        console.log(res);
+        setNotif(res.data);
+      });
+    }
     return () => {
       setUsername("");
     };
-  }, [state.username, state.isAuthenticated]);
+  }, [state.username, state.isAuthenticated, state.isAdmin, dispatch]);
 
   const menu = (
     <Menu>
@@ -62,7 +81,7 @@ export const MainContainer = () => {
     </Menu>
   );
 
-  const notif = (
+  const notify = (
     <Menu
       style={{
         minWidth: "300px",
@@ -71,26 +90,37 @@ export const MainContainer = () => {
         overflowY: "auto",
       }}
     >
-      <Menu.Item>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <InfoCircleOutlined size={30} style={{ marginRight: "10px" }} />
-          <p
-            style={{
-              wordWrap: "break-word",
-              whiteSpace: "pre-line",
-              wordBreak: "break-word",
-            }}
+      {notif.map((notifikasi, i) => {
+        console.log(notifikasi);
+        return (
+          <Menu.Item
+            key={i}
+            onClick={() => history.push("/notifikasi", { notifikasi })}
           >
-            Ini notifikasi ya .
-          </p>
-        </div>
-      </Menu.Item>
-
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "10px",
+                marginTop: "10px",
+              }}
+            >
+              {notifikasi.isRead === 0 && (
+                <InfoCircleOutlined size={30} style={{ marginRight: "10px" }} />
+              )}
+              <p
+                style={{
+                  wordWrap: "break-word",
+                  whiteSpace: "pre-line",
+                  wordBreak: "break-word",
+                }}
+              >
+                <b>{notifikasi.username}</b> {notifikasi.konten}
+              </p>
+            </div>
+          </Menu.Item>
+        );
+      })}
       <Menu.Divider />
     </Menu>
   );
@@ -119,7 +149,7 @@ export const MainContainer = () => {
 
           {/* notify */}
           {state.isAdmin && (
-            <Dropdown overlay={notif} trigger={["click"]}>
+            <Dropdown overlay={notify} trigger={["click"]}>
               <BellOutlined />
             </Dropdown>
           )}

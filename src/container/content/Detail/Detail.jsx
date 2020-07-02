@@ -10,8 +10,8 @@ import { DashboardPages } from "../Dashboard/DashboardPages";
 
 export const DetailPages = () => {
   const history = useHistory();
-  const { repo } = history.location.state;
   const [loading, setLoading] = useState(false);
+  let { repo } = history.location.state;
 
   const viewRender = (field = "") => {
     if (
@@ -26,7 +26,14 @@ export const DetailPages = () => {
           </Button>
         );
       } else {
-        return <img width="150" src={repo[field]} alt={field} />;
+        return (
+          <img
+            onClick={() => window.open(repo[field], "_blank")}
+            width="150"
+            src={repo[field]}
+            alt={field}
+          />
+        );
       }
     } else {
       return <p>{repo[field]}</p>;
