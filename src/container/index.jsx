@@ -42,9 +42,7 @@ export const MainContainer = () => {
           });
         }
       });
-      console.log("MASOK");
       GetAllNotification().then((res) => {
-        console.log(res);
         setNotif(res.data);
       });
     }
@@ -91,7 +89,6 @@ export const MainContainer = () => {
       }}
     >
       {notif.map((notifikasi, i) => {
-        console.log(notifikasi);
         return (
           <Menu.Item
             key={i}
@@ -118,6 +115,7 @@ export const MainContainer = () => {
                 <b>{notifikasi.username}</b> {notifikasi.konten}
               </p>
             </div>
+            <h6>{notifikasi.waktu} </h6>
           </Menu.Item>
         );
       })}

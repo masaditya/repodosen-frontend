@@ -21,7 +21,6 @@ export const ShowNotificationPages = () => {
       })
       .then((res) => {
         UpdateReadNotification(tmp.id_notifikasi).then((res) => {
-          console.log(res);
           setLoading(false);
         });
       });
