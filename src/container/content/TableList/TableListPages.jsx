@@ -111,7 +111,11 @@ export const TableListPages = ({ repos, loading, pathname }) => {
       render: (props) => {
         if (field[4] && field[4].includes("file")) {
           return (
-            <Button onClick={() => window.open(repos[field[4]], "_blank")}>
+            <Button
+              onClick={() => {
+                window.open(props, "_blank");
+              }}
+            >
               Show Files
             </Button>
           );
