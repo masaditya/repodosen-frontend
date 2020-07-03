@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Layout, Button, Menu, Dropdown, notification } from "antd";
 import { Sidenav } from "../components/Sidenav/Sidenav";
 import { BottomFooter } from "../components/BottomFooter/BottomFooter";
-import { Switch, Link, useHistory } from "react-router-dom";
+import { Switch, Link, useHistory, useRouteMatch } from "react-router-dom";
 import { useContext } from "react";
 import { RootContext } from "../context/Context";
 import {
@@ -15,6 +15,7 @@ import { useState } from "react";
 import { BellOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 export const MainContainer = () => {
+  let match = useRouteMatch("/user/dosen");
   const { Header, Content } = Layout;
   const { state, dispatch } = useContext(RootContext);
   const [username, setUsername] = useState(state.username);
@@ -39,7 +40,7 @@ export const MainContainer = () => {
           dispatch({
             type: "SET_DOSEN",
             payload: {
-              dosen : res.data
+              dosen: res.data,
             },
           });
         }
@@ -166,7 +167,11 @@ export const MainContainer = () => {
           {!showAddButton() && (
             <Button
               onClick={() => {
-                history.push("/add", prevRoute);
+                if (match) {
+                  history.push("/add-dosen");
+                } else {
+                  history.push("/add", prevRoute);
+                }
               }}
             >
               Add Data

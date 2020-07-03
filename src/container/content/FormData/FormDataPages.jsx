@@ -102,6 +102,7 @@ export const FormDataPages = () => {
   //
   const handleSelect = (e) => {
     const tmp = Object.assign(inputText, { id_dosen: e });
+    console.log(tmp);
     setInputText(tmp);
   };
 
@@ -120,7 +121,7 @@ export const FormDataPages = () => {
         erfield = Object.assign(erfield, { [field]: true });
       }
     });
-    setErrorField({ ...errorField, ...erfield });
+    if (!state.isAdmin) setErrorField({ ...errorField, ...erfield });
 
     if (Object.values(erfield).indexOf(true) > -1) {
       return true;
@@ -133,7 +134,7 @@ export const FormDataPages = () => {
     e.preventDefault();
     setUploading(true);
 
-    if (!validateField()) {
+    if (!validateField() || state.isAdmin) {
       let formData = new FormData();
       // mengisi formData dengan text field
       Object.keys(inputText).forEach((field) => {
@@ -198,21 +199,15 @@ export const FormDataPages = () => {
           </Select>
         </Form.Item>
 
-        { state.isAdmin && <Form.Item label="Dosen">
-          <Select
-            style={{ width: 150 }}
-            defaultValue={
-              dosens.length > 0 && (
-                <Option value={dosens[0].id_dosen}>{dosens[0].nama}</Option>
-              )
-            }
-            onChange={(e) => handleSelect(e)}
-          >
-            {dosens.map((dosen) => {
-              return <Option value={dosen.id_dosen}>{dosen.nama}</Option>;
-            })}
-          </Select>
-        </Form.Item>}
+        {state.isAdmin && (
+          <Form.Item label="Dosen">
+            <Select style={{ width: 150 }} onChange={(e) => handleSelect(e)}>
+              {dosens.map((dosen) => {
+                return <Option value={dosen.id_dosen}>{dosen.nama}</Option>;
+              })}
+            </Select>
+          </Form.Item>
+        )}
 
         <Divider></Divider>
 

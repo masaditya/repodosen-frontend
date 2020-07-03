@@ -33,7 +33,7 @@ export const DashboardPages = ({
 
             <Button
               onClick={() => {
-                history.push(urlDosen + "/kepangkatan/" + id_dosen);
+                history.push(urlDosen + "/kepangkatan" + id_dosen);
               }}
               className="button-check"
             >
@@ -49,7 +49,7 @@ export const DashboardPages = ({
             </p>
 
             <Button
-              onClick={() => history.push(urlDosen + "/pendidikan/" + id_dosen)}
+              onClick={() => history.push(urlDosen + "/pendidikan" + id_dosen)}
               className="button-check"
             >
               Check
@@ -64,7 +64,7 @@ export const DashboardPages = ({
             </p>
 
             <Button
-              onClick={() => history.push(urlDosen + "/penelitian/" + id_dosen)}
+              onClick={() => history.push(urlDosen + "/penelitian" + id_dosen)}
               className="button-check"
             >
               Check
@@ -79,7 +79,7 @@ export const DashboardPages = ({
             </p>
 
             <Button
-              onClick={() => history.push(urlDosen + "/pengabdian/" + id_dosen)}
+              onClick={() => history.push(urlDosen + "/pengabdian" + id_dosen)}
               className="button-check"
             >
               Check
@@ -94,7 +94,7 @@ export const DashboardPages = ({
             </p>
 
             <Button
-              onClick={() => history.push(urlDosen + "/pengajaran/" + id_dosen)}
+              onClick={() => history.push(urlDosen + "/pengajaran" + id_dosen)}
               className="button-check"
             >
               Check
@@ -109,7 +109,7 @@ export const DashboardPages = ({
             </p>
 
             <Button
-              onClick={() => history.push(urlDosen + "/pelatihan/" + id_dosen)}
+              onClick={() => history.push(urlDosen + "/pelatihan" + id_dosen)}
               className="button-check"
             >
               Check

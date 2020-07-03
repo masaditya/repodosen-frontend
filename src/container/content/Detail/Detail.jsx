@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, notification } from "antd";
 import {
@@ -7,36 +7,41 @@ import {
 } from "../../../context/actions/actions";
 import { useState } from "react";
 import { DashboardPages } from "../Dashboard/DashboardPages";
+import { RootContext } from "../../../context/Context";
 
 export const DetailPages = () => {
   const history = useHistory();
+  const { state } = useContext(RootContext);
+  const dosens = state.dosen;
   const [loading, setLoading] = useState(false);
   let { repo } = history.location.state;
 
   const viewRender = (field = "") => {
-    if (
-      field.includes("file_") ||
-      (field.includes("foto") && repo[field] !== null)
-    ) {
-      let filename = repo[field].split(".").pop().toLowerCase();
-      if (filename === "pdf") {
-        return (
-          <Button onClick={() => window.open(repo[field], "_blank")}>
-            Show Files
-          </Button>
-        );
+    if (repo[field]) {
+      if (
+        field.includes("file_") ||
+        (field.includes("foto") && repo[field] !== null)
+      ) {
+        let filename = repo[field].split(".").pop().toLowerCase();
+        if (filename === "pdf") {
+          return (
+            <Button onClick={() => window.open(repo[field], "_blank")}>
+              Show Files
+            </Button>
+          );
+        } else {
+          return (
+            <img
+              onClick={() => window.open(repo[field], "_blank")}
+              width="150"
+              src={repo[field]}
+              alt={field}
+            />
+          );
+        }
       } else {
-        return (
-          <img
-            onClick={() => window.open(repo[field], "_blank")}
-            width="150"
-            src={repo[field]}
-            alt={field}
-          />
-        );
+        return <p>{repo[field]}</p>;
       }
-    } else {
-      return <p>{repo[field]}</p>;
     }
   };
 
@@ -77,8 +82,24 @@ export const DetailPages = () => {
           </Button>
         )}
       </div>
+      <div
+        style={{
+          marginTop: "20px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "1em 4em",
+          borderRadius: "1em",
+          border: "0.5px solid #f0f0f0",
+        }}
+      >
+        <p>Nama Dosen</p>
+
+        <p>{dosens.find((dosen) => (dosen.id_dosen = repo.id_dosen)).nama}</p>
+      </div>
       {Object.keys(repo)
-        .splice(2, 99)
+        .splice(1, 99)
         .map((field, i) => {
           return (
             <div
