@@ -124,9 +124,7 @@ export const DashboardPages = ({
             </p>
 
             <Button
-              onClick={() =>
-                history.push(urlDosen + "/sertifikasi/" + id_dosen)
-              }
+              onClick={() => history.push(urlDosen + "/sertifikasi" + id_dosen)}
               className="button-check"
             >
               Check

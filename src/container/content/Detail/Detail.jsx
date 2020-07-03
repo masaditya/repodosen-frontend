@@ -126,7 +126,7 @@ export const DetailPages = () => {
         <DashboardPages
           noGreeting
           withDosen
-          id_dosen={repo.id_dosen}
+          id_dosen={"/" + repo.id_dosen}
           urlDosen="/user/dosen"
         />
       )}
