@@ -1,10 +1,19 @@
 import React from "react";
 
-import { Table, Divider, Button } from "antd";
-import { stringToUppercase } from "../../../context/actions/actions";
-import { useHistory } from "react-router-dom";
+import { Table, Divider, Button, Modal, notification } from "antd";
+import {
+  stringToUppercase,
+  DeteleData,
+  DeleteDosen,
+} from "../../../context/actions/actions";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+
+const { confirm } = Modal;
 
 export const TableListPages = ({ repos, loading, pathname }) => {
+  let match = useRouteMatch("/user/dosen");
+
   const history = useHistory();
   let field = Object.keys(repos[0]);
   const columns = [
@@ -61,7 +70,14 @@ export const TableListPages = ({ repos, loading, pathname }) => {
             <Divider type="vertical" />
             <Button
               type="danger"
-              onClick={() => history.push("/update", { pathname, ...repo })}
+              onClick={() => {
+                console.log(match);
+                if (match) {
+                  showConfirmDosen(repo);
+                } else {
+                  showConfirm(repo);
+                }
+              }}
             >
               Delete
             </Button>
@@ -83,4 +99,62 @@ export const TableListPages = ({ repos, loading, pathname }) => {
       dataSource={data}
     />
   );
+};
+
+const showConfirm = (repo) => {
+  confirm({
+    title: "Do you Want to delete these items?",
+    icon: <ExclamationCircleOutlined />,
+    onOk() {
+      const firstField = Object.keys(repo)[0]; // id_pelatihan
+      const pathname = firstField.split("_")[1]; // pelatihan
+      const id = repo[firstField]; // id : 5
+
+      DeteleData(pathname, id).then((res) => {
+        if (res.success) {
+          notification.success({
+            message: "Deleted data from " + pathname,
+            description: res.message,
+          });
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 1000);
+        } else {
+          notification.error({
+            message: "Deleted data from " + pathname,
+            description: res.message,
+          });
+        }
+      });
+    },
+    onCancel() {},
+  });
+};
+
+const showConfirmDosen = (repo) => {
+  confirm({
+    title: "Do you Want to delete these Dosen?",
+    icon: <ExclamationCircleOutlined />,
+    onOk() {
+      const firstField = Object.keys(repo)[0]; // id_pelatihan
+      const id = repo[firstField]; // id : 5
+      DeleteDosen(id).then((res) => {
+        if (res.success) {
+          notification.success({
+            message: "Deleted data from ",
+            description: res.message,
+          });
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 1000);
+        } else {
+          notification.error({
+            message: "Deleted data from ",
+            description: res.message,
+          });
+        }
+      });
+    },
+    onCancel() {},
+  });
 };
